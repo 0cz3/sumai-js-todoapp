@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/img/todo.svg" />
+    <link rel="stylesheet" href="/scss/style.scss" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todo App</title>
+  </head>
+  <body>
+    <div class="todo">
+      <div class="addTodo">
+        <input class="addTodo__input" type="text" placeholder="タスクを入力して追加" />
+        <button class="addTodo__submit">追 加</button>
+      </div>
+      <div class="todoTask">
+        <div class="todoTask__header">
+          <button class="todoTask__toggle"></button>
+          <p class="todoTask__title">Todoリスト</p>
+        </div>
+        <div class="todoTask__list">
+          <button class="todoTask__check checked"></button>
+          <input class="todoTask__label" type="text" value="" />
+          <button class="todoTask__delete"></button>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="/js/main.js"></script>
+  </body>
+</html>

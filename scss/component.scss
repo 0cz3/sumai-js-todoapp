@@ -1,0 +1,50 @@
+.addTodo__input {
+  padding: 6px;
+  width: 540px;
+}
+
+.addTodo__input:focus-visible {
+  outline: 1px solid;
+}
+
+.addTodo__submit {
+  background-color: rgb(221, 221, 221);
+  padding: 6px 12px;
+}
+
+.todoTask__toggle {
+  background: url(/img/up.svg) no-repeat;
+  background-size: contain;
+  display: inline-block;
+  height: 36px;
+  width: 36px;
+  cursor: pointer;
+}
+
+.todoTask__check {
+  background: url(/img/circle.svg) no-repeat;
+  background-size: contain;
+  display: inline-block;
+  height: 36px;
+  width: 36px;
+  cursor: pointer;
+}
+
+.todoTask__label {
+  border: none;
+  padding: 6px;
+  width: 540px;
+}
+
+.todoTask__label:focus-visible {
+  outline: 0.5px solid;
+}
+
+.todoTask__delete {
+  background: url(/img/trash.svg) no-repeat;
+  background-size: contain;
+  display: inline-block;
+  height: 36px;
+  width: 36px;
+  cursor: pointer;
+}

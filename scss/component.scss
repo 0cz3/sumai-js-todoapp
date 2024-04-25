@@ -21,8 +21,26 @@
   cursor: pointer;
 }
 
+.todoTask__toggle.closed {
+  background: url(/img/down.svg) no-repeat;
+  background-size: contain;
+  display: inline-block;
+  height: 36px;
+  width: 36px;
+  cursor: pointer;
+}
+
 .todoTask__check {
   background: url(/img/circle.svg) no-repeat;
+  background-size: contain;
+  display: inline-block;
+  height: 36px;
+  width: 36px;
+  cursor: pointer;
+}
+
+.todoTask__check.checked {
+  background: url(/img/checked.svg) no-repeat;
   background-size: contain;
   display: inline-block;
   height: 36px;

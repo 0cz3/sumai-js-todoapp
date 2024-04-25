@@ -10,19 +10,15 @@
   <body>
     <div class="todo">
       <div class="addTodo">
-        <input class="addTodo__input" type="text" placeholder="タスクを入力して追加" />
-        <button class="addTodo__submit">追 加</button>
+        <input class="addTodo__input js_addTodo_input" placeholder="タスクを入力して追加" />
+        <button class="addTodo__submit js_addTodo_submit">追 加</button>
       </div>
       <div class="todoTask">
         <div class="todoTask__header">
-          <button class="todoTask__toggle"></button>
+          <button class="todoTask__toggle js_todoTask_toggle"></button>
           <p class="todoTask__title">Todoリスト</p>
         </div>
-        <div class="todoTask__list">
-          <button class="todoTask__check checked"></button>
-          <input class="todoTask__label" type="text" value="" />
-          <button class="todoTask__delete"></button>
-        </div>
+        <ul class="todoTask__list js_todoTask_list"></ul>
       </div>
     </div>
     <script type="module" src="/js/main.js"></script>

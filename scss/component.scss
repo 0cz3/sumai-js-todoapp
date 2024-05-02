@@ -30,6 +30,25 @@
   cursor: pointer;
 }
 
+.todoTask__count {
+  font-size: 0.9em;
+  position: relative;
+}
+
+.todoTask__count::before {
+  z-index: -1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  content: '';
+  display: inline-block;
+  background-color: rgb(221, 221, 221);
+  height: 24px;
+  width: 24px;
+  border-radius: 50%;
+}
+
 .todoTask__check {
   background: url(/img/circle.svg) no-repeat;
   background-size: contain;

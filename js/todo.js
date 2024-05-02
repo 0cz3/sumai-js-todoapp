@@ -3,6 +3,7 @@ export class Todo {
   constructor(obj) {
     this.ul = document.querySelector(obj.ul);
     this.inputValue = document.querySelector(obj.inputValue).value;
+    this.id = obj.id;
   }
   addTodo() {
     //li作る

@@ -10,6 +10,7 @@ submitButton.addEventListener('click', () => {
     counter: '.js_todoTask_count',
   });
   newTodo.addTodo();
+  document.querySelector('.js_addTodo_input').value = "";
 });
 
 //ドロップダウン、closedクラスの付け外し

@@ -1,11 +1,13 @@
-
+let id = 0;
 export class Todo {
   constructor(obj) {
     this.ul = document.querySelector(obj.ul);
     this.inputValue = document.querySelector(obj.inputValue).value;
-    this.id = obj.id;
+    this.counter = document.querySelector(obj.counter);
+    this.id = id++;
   }
   addTodo() {
+    this.counter.innerHTML = id;
     //li作る
     const li = document.createElement('li');
     li.className = 'todoTask__item';

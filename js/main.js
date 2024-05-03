@@ -1,19 +1,15 @@
 const submitButton = document.querySelector('.js_addTodo_submit');
 const toggle = document.querySelector('.js_todoTask_toggle');
-const counter = document.querySelector('.js_todoTask_count');
 import { Todo } from './todo.js';
 
-let count = 0;
 
 submitButton.addEventListener('click', () => {
-  count++;
   const newTodo = new Todo({
     ul: '.js_todoTask_list',
     inputValue: '.js_addTodo_input',
-    id: count,
+    counter: '.js_todoTask_count',
   });
   newTodo.addTodo();
-  counter.innerHTML = count;
 });
 
 //ドロップダウン、closedクラスの付け外し

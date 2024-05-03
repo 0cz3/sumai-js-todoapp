@@ -1,8 +1,8 @@
 let id = 0;
 export class Todo {
   constructor(obj) {
-    this.ul = document.querySelector(obj.ul);
-    this.inputValue = document.querySelector(obj.inputValue).value;
+    this.ul = obj.ul;
+    this.inputValue = obj.inputValue;
     this.counter = document.querySelector(obj.counter);
     this.id = id++;
     this.completed = false;

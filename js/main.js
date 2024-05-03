@@ -1,16 +1,17 @@
 const submitButton = document.querySelector('.js_addTodo_submit');
 const toggle = document.querySelector('.js_todoTask_toggle');
+const ul = document.querySelector('.js_todoTask_list');
+const input = document.querySelector('.js_addTodo_input');
 import { Todo } from './todo.js';
-
 
 submitButton.addEventListener('click', () => {
   const newTodo = new Todo({
-    ul: '.js_todoTask_list',
-    inputValue: '.js_addTodo_input',
+    ul: ul,
+    inputValue: input.value,
     counter: '.js_todoTask_count',
   });
   newTodo.addTodo();
-  document.querySelector('.js_addTodo_input').value = "";
+  input.value = "";
 });
 
 //ドロップダウン、closedクラスの付け外し

@@ -5,6 +5,7 @@ export class Todo {
     this.inputValue = document.querySelector(obj.inputValue).value;
     this.counter = document.querySelector(obj.counter);
     this.id = id++;
+    this.completed = false;
   }
   addTodo() {
     this.counter.innerHTML = id;
@@ -32,7 +33,13 @@ export class Todo {
     li.appendChild(deleteButton);
 
     checkButton.addEventListener('click', (e) => {
-      e.target.classList.contains('checked') ? e.target.classList.remove('checked') : e.target.classList.add('checked');
+      if (e.target.classList.contains('checked')) {
+        e.target.classList.remove('checked');
+        this.completed = false;
+        return;
+      }
+      e.target.classList.add('checked');
+      this.completed = true;
     });
 
     //todo削除
@@ -41,5 +48,3 @@ export class Todo {
     });
   }
 }
-
-

@@ -1,4 +1,6 @@
 let id = 0;
+let todoTasks = [];
+
 export class Todo {
   constructor(obj) {
     this.ul = obj.ul;
@@ -8,7 +10,15 @@ export class Todo {
     this.completed = false;
   }
   addTodo() {
-    this.counter.innerHTML = id;
+    todoTasks.push(this);
+
+    const updateCount = () => {
+      const incompleteTasks = todoTasks.filter((todoTask) => todoTask.completed === false);
+      const incompleteCount = incompleteTasks.length;
+      this.counter.innerHTML = incompleteCount;
+    };
+    updateCount();
+
     //li作る
     const li = document.createElement('li');
     li.className = 'todoTask__item';
@@ -36,15 +46,18 @@ export class Todo {
       if (e.target.classList.contains('checked')) {
         e.target.classList.remove('checked');
         this.completed = false;
+        updateCount();
         return;
       }
       e.target.classList.add('checked');
       this.completed = true;
+      updateCount();
     });
 
     //todo削除
     deleteButton.addEventListener('click', (e) => {
       e.target.parentNode.remove();
+      updateCount();
     });
   }
 }

@@ -57,6 +57,7 @@ export class Todo {
     //todo削除
     deleteButton.addEventListener('click', (e) => {
       e.target.parentNode.remove();
+      todoTasks = todoTasks.filter((todoTask) => todoTask.id !== this.id);
       updateCount();
     });
   }

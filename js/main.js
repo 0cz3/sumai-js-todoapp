@@ -21,7 +21,6 @@ input.addEventListener('input', () => {
 });
 
 submitButton.addEventListener('click', () => {
-  console.log(input.value);
   const newTodo = new Todo({
     ul: ul,
     inputValue: htmlspecialchars(input.value),

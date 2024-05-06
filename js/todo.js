@@ -1,3 +1,5 @@
+import htmlspecialchars from 'htmlspecialchars';
+
 let id = 0;
 let todoTasks = [];
 
@@ -29,7 +31,7 @@ export class Todo {
 
     //input作ってtodoをvalueに入れる
     const label = document.createElement('input');
-    label.className = 'todoTask__label';
+    label.className = 'todoTask__label js_todoTask_label';
     label.value = this.inputValue;
 
     //deleteButtonを作る
@@ -59,6 +61,16 @@ export class Todo {
       e.target.parentNode.remove();
       todoTasks = todoTasks.filter((todoTask) => todoTask.id !== this.id);
       updateCount();
+    });
+    
+    //todo更新
+    label.addEventListener('change', (e) => {
+      if (/^\S/.test(e.target.value)) {
+        e.target.value = htmlspecialchars(e.target.value);
+        this.inputValue = htmlspecialchars(e.target.value);
+        return;
+      }
+      e.target.value = this.inputValue;
     });
   }
 }

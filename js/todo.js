@@ -6,7 +6,7 @@ let todoTasks = [];
 export class Todo {
   constructor(obj) {
     this.ul = obj.ul;
-    this.inputValue = obj.inputValue;
+    this.inputValue = htmlspecialchars(obj.inputValue);
     this.counter = document.querySelector(obj.counter);
     this.id = id++;
     this.completed = false;
@@ -62,15 +62,13 @@ export class Todo {
       todoTasks = todoTasks.filter((todoTask) => todoTask.id !== this.id);
       updateCount();
     });
-    
-    //todo更新
-    label.addEventListener('change', (e) => {
+  }
+  updateTodo(e) {
       if (/^\S/.test(e.target.value)) {
         e.target.value = htmlspecialchars(e.target.value);
         this.inputValue = htmlspecialchars(e.target.value);
         return;
       }
       e.target.value = this.inputValue;
-    });
   }
 }

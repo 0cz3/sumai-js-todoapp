@@ -3,11 +3,12 @@ const toggle = document.querySelector('.js_todoTask_toggle');
 const ul = document.querySelector('.js_todoTask_list');
 const input = document.querySelector('.js_addTodo_input');
 import { Todo } from './todo.js';
+import htmlspecialchars from 'htmlspecialchars';
 
 submitButton.addEventListener('click', () => {
   const newTodo = new Todo({
     ul: ul,
-    inputValue: input.value,
+    inputValue: htmlspecialchars(input.value),
     counter: '.js_todoTask_count',
   });
   newTodo.addTodo();

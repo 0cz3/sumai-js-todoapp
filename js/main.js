@@ -5,14 +5,31 @@ const input = document.querySelector('.js_addTodo_input');
 import { Todo } from './todo.js';
 import htmlspecialchars from 'htmlspecialchars';
 
+const checkInput = () => {
+  if (/^\S/.test(input.value)) {
+    submitButton.disabled = false;
+    submitButton.style.opacity = 1;
+    return;
+  }
+  submitButton.disabled = true;
+  submitButton.style.opacity = 0.5;
+};
+checkInput();
+
+input.addEventListener('input', () => {
+  checkInput();
+});
+
 submitButton.addEventListener('click', () => {
+  console.log(input.value);
   const newTodo = new Todo({
     ul: ul,
     inputValue: htmlspecialchars(input.value),
     counter: '.js_todoTask_count',
   });
   newTodo.addTodo();
-  input.value = "";
+  input.value = '';
+  checkInput();
 });
 
 //ドロップダウン、closedクラスの付け外し

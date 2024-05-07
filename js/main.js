@@ -6,11 +6,11 @@ import checkInput from './checkInput.js';
 import dropdown from './dropdown.js';
 
 checkInput();
-dropdown();
-
 input.addEventListener('input', () => {
   checkInput();
 });
+
+dropdown();
 
 submitButton.addEventListener('click', () => {
   const newTodo = new Todo({

@@ -4,6 +4,10 @@ let id = 0;
 let todoTasks = [];
 
 export class Todo {
+  /**
+   * constructor、inputValueをエスケープ
+   * @return {Object} インスタンス自身
+   */
   constructor(obj) {
     this.ul = obj.ul;
     this.inputValue = htmlspecialchars(obj.inputValue);
@@ -11,33 +15,34 @@ export class Todo {
     this.id = id++;
     this.completed = false;
   }
+  /**
+   * カウンターの値を未完了のtodo数に更新
+   */
   updateCount() {
     const incompleteTasks = todoTasks.filter((todoTask) => todoTask.completed === false);
     const incompleteCount = incompleteTasks.length;
     this.counter.innerHTML = incompleteCount;
   }
+  /**
+   * todoを追加、DOMを変化させてtodo表示
+   */
   addTodo() {
     todoTasks.push(this);
     this.updateCount();
 
-    //li作る
     const li = document.createElement('li');
     li.className = 'todoTask__item';
 
-    //checkButtonを作る
     const checkButton = document.createElement('button');
     checkButton.className = 'todoTask__check js_todoTask_check';
 
-    //input作ってtodoをvalueに入れる
     const label = document.createElement('input');
     label.className = 'todoTask__label js_todoTask_label';
     label.value = this.inputValue;
 
-    //deleteButtonを作る
     const deleteButton = document.createElement('button');
     deleteButton.className = 'todoTask__delete js_todoTask_delete';
 
-    //ulに入れる
     this.ul.appendChild(li);
     li.appendChild(checkButton);
     li.appendChild(label);
@@ -54,11 +59,17 @@ export class Todo {
     this.completed = true;
     this.updateCount();
   }
+  /**
+   * todoを削除
+   */
   deleteTodo(e) {
     e.target.parentNode.remove();
     todoTasks = todoTasks.filter((todoTask) => todoTask.id !== this.id);
     this.updateCount();
   }
+  /**
+   * todoの内容を更新、入力内容が空欄の場合は更新しない
+   */
   updateTodo(e) {
     if (/^\S/.test(e.target.value)) {
       e.target.value = htmlspecialchars(e.target.value);

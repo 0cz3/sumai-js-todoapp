@@ -22,10 +22,10 @@ submitButton.addEventListener('click', () => {
   input.value = '';
   checkInput();
 
-  
-
-  const label = document.querySelector('.js_todoTask_label');
-  label.addEventListener('change', (e) => {
-    newTodo.updateTodo(e);
+  const labels = document.querySelectorAll('.js_todoTask_label');
+  labels.forEach(label => {
+    label.addEventListener('change', (e) => {
+      newTodo.updateTodo(e);
+    });
   });
 });

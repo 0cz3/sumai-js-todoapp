@@ -22,9 +22,26 @@ submitButton.addEventListener('click', () => {
   input.value = '';
   checkInput();
 
+  const checkButtons = document.querySelectorAll('.js_todoTask_check');
+  checkButtons.forEach((checkButton) => {
+    checkButton.addEventListener('click', (e) => {
+      e.stopImmediatePropagation();
+      newTodo.toggleCompletedTodo(e);
+    });
+  });
+
+  const deleteButtons = document.querySelectorAll('.js_todoTask_delete');
+  deleteButtons.forEach((deleteButton) => {
+    deleteButton.addEventListener('click', (e) => {
+      e.stopImmediatePropagation();
+      newTodo.deleteTodo(e);
+    });
+  });
+
   const labels = document.querySelectorAll('.js_todoTask_label');
-  labels.forEach(label => {
+  labels.forEach((label) => {
     label.addEventListener('change', (e) => {
+      e.stopImmediatePropagation();
       newTodo.updateTodo(e);
     });
   });

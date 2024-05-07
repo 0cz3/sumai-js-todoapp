@@ -11,10 +11,10 @@ export class Todo {
     this.id = id++;
     this.completed = false;
   }
-  updateCount(){
+  updateCount() {
     const incompleteTasks = todoTasks.filter((todoTask) => todoTask.completed === false);
-      const incompleteCount = incompleteTasks.length;
-      this.counter.innerHTML = incompleteCount;
+    const incompleteCount = incompleteTasks.length;
+    this.counter.innerHTML = incompleteCount;
   }
   addTodo() {
     todoTasks.push(this);
@@ -42,32 +42,29 @@ export class Todo {
     li.appendChild(checkButton);
     li.appendChild(label);
     li.appendChild(deleteButton);
-
-    checkButton.addEventListener('click', (e) => {
-      if (e.target.classList.contains('checked')) {
-        e.target.classList.remove('checked');
-        this.completed = false;
-        this.updateCount();
-        return;
-      }
-      e.target.classList.add('checked');
-      this.completed = true;
+  }
+  toggleCompletedTodo(e) {
+    if (e.target.classList.contains('checked')) {
+      e.target.classList.remove('checked');
+      this.completed = false;
       this.updateCount();
-    });
-
-    //todo削除
-    deleteButton.addEventListener('click', (e) => {
-      e.target.parentNode.remove();
-      todoTasks = todoTasks.filter((todoTask) => todoTask.id !== this.id);
-      this.updateCount();
-    });
+      return;
+    }
+    e.target.classList.add('checked');
+    this.completed = true;
+    this.updateCount();
+  }
+  deleteTodo(e) {
+    e.target.parentNode.remove();
+    todoTasks = todoTasks.filter((todoTask) => todoTask.id !== this.id);
+    this.updateCount();
   }
   updateTodo(e) {
-      if (/^\S/.test(e.target.value)) {
-        e.target.value = htmlspecialchars(e.target.value);
-        this.inputValue = htmlspecialchars(e.target.value);
-        return;
-      }
-      e.target.value = this.inputValue;
+    if (/^\S/.test(e.target.value)) {
+      e.target.value = htmlspecialchars(e.target.value);
+      this.inputValue = htmlspecialchars(e.target.value);
+      return;
+    }
+    e.target.value = this.inputValue;
   }
 }

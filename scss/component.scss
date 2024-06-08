@@ -9,7 +9,12 @@
 
 .addTodo__submit {
   background-color: rgb(221, 221, 221);
+  opacity: 1;
   padding: 6px 12px;
+}
+
+.addTodo__submit.is-inactive {
+  opacity: 0.5;
 }
 
 .todoTask__toggle {

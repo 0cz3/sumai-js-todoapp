@@ -29,10 +29,6 @@
 .todoTask__toggle.is-closed {
   background: url(/img/down.svg) no-repeat;
   background-size: contain;
-  display: inline-block;
-  height: 36px;
-  width: 36px;
-  cursor: pointer;
 }
 
 .todoTask__list {
@@ -74,10 +70,6 @@
 .todoTask__check.checked {
   background: url(/img/checked.svg) no-repeat;
   background-size: contain;
-  display: inline-block;
-  height: 36px;
-  width: 36px;
-  cursor: pointer;
 }
 
 .todoTask__label {

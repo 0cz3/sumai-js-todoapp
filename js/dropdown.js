@@ -1,18 +1,19 @@
 const toggle = document.querySelector('.js_todoTask_toggle');
 const ul = document.querySelector('.js_todoTask_list');
+import { IS_CLOSED } from './constant.js';
 
 /**
  * todoタスクの表示非表示切り替え
  */
 const dropdown = () => {
   toggle.addEventListener('click', (e) => {
-    if (e.target.classList.contains('closed')) {
-      e.target.classList.remove('closed');
-      ul.style.display = 'block';
+    if (e.currentTarget.classList.contains(IS_CLOSED)) {
+      e.currentTarget.classList.remove(IS_CLOSED);
+      ul.classList.remove(IS_CLOSED);
       return;
     }
-    e.target.classList.add('closed');
-    ul.style.display = 'none';
+    e.currentTarget.classList.add(IS_CLOSED);
+    ul.classList.add(IS_CLOSED);
   });
 };
 

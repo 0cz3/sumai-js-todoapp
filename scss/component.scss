@@ -26,13 +26,21 @@
   cursor: pointer;
 }
 
-.todoTask__toggle.closed {
+.todoTask__toggle.is-closed {
   background: url(/img/down.svg) no-repeat;
   background-size: contain;
   display: inline-block;
   height: 36px;
   width: 36px;
   cursor: pointer;
+}
+
+.todoTask__list {
+  display: block;
+}
+
+.todoTask__list.is-closed {
+  display: none;
 }
 
 .todoTask__count {

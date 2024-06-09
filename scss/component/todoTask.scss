@@ -1,23 +1,21 @@
-.addTodo {
-  &__input {
-    padding: 6px;
-    width: 540px;
-    &:focus-visible {
-      outline: 1px solid;
-    }
-  }
-
-  &__submit {
-    background-color: rgb(221, 221, 221);
-    opacity: 1;
-    padding: 6px 12px;
-    &.is-inactive {
-      opacity: 0.5;
-    }
-  }
-}
-
 .todoTask {
+  display: flex;
+  flex-direction: column;
+  margin-top: 12px;
+  gap: 12px;
+
+  &__header {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  &__item {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
   &__toggle {
     background: url(/img/up.svg) no-repeat;
     background-size: contain;

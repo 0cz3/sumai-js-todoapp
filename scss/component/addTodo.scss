@@ -1,0 +1,23 @@
+.addTodo {
+    display: flex;
+    gap: 12px;
+    padding-left: 48px;
+    align-items: center;
+
+    &__input {
+      padding: 6px;
+      width: 540px;
+      &:focus-visible {
+        outline: 1px solid;
+      }
+    }
+
+    &__submit {
+      background-color: rgb(221, 221, 221);
+      opacity: 1;
+      padding: 6px 12px;
+      &.is-inactive {
+        opacity: 0.5;
+      }
+    }
+  }

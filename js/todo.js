@@ -1,4 +1,5 @@
-import htmlspecialchars from 'htmlspecialchars';
+import { escapeChars } from './escapeChars.js';
+import { unescapeChars } from './escapeChars.js';
 
 let id = 0;
 let todoTasks = [];
@@ -10,7 +11,7 @@ export class Todo {
    */
   constructor(obj) {
     this.ul = obj.ul;
-    this.inputValue = htmlspecialchars(obj.inputValue);
+    this.inputValue = escapeChars(obj.inputValue);
     this.counter = document.querySelector(obj.counter);
     this.id = id++;
     this.completed = false;
@@ -38,7 +39,7 @@ export class Todo {
 
     const label = document.createElement('input');
     label.className = 'todoTask__label js_todoTask_label';
-    label.value = this.inputValue;
+    label.value = unescapeChars(this.inputValue);
 
     const deleteButton = document.createElement('button');
     deleteButton.className = 'todoTask__delete js_todoTask_delete';
@@ -72,8 +73,8 @@ export class Todo {
    */
   updateTodo(e) {
     if (/^\S/.test(e.currentTarget.value)) {
-      e.currentTarget.value = htmlspecialchars(e.currentTarget.value);
-      this.inputValue = htmlspecialchars(e.currentTarget.value);
+      e.currentTarget.value = escapeChars(e.currentTarget.value);
+      this.inputValue = escapeChars(e.currentTarget.value);
       return;
     }
     e.currentTarget.value = this.inputValue;

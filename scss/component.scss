@@ -1,96 +1,92 @@
-.addTodo__input {
-  padding: 6px;
-  width: 540px;
+.addTodo {
+  &__input {
+    padding: 6px;
+    width: 540px;
+    &:focus-visible {
+      outline: 1px solid;
+    }
+  }
+
+  &__submit {
+    background-color: rgb(221, 221, 221);
+    opacity: 1;
+    padding: 6px 12px;
+    &.is-inactive {
+      opacity: 0.5;
+    }
+  }
 }
 
-.addTodo__input:focus-visible {
-  outline: 1px solid;
-}
+.todoTask {
+  &__toggle {
+    background: url(/img/up.svg) no-repeat;
+    background-size: contain;
+    display: inline-block;
+    height: 36px;
+    width: 36px;
+    cursor: pointer;
+    &.is-closed {
+      background: url(/img/down.svg) no-repeat;
+      background-size: contain;
+    }
+  }
 
-.addTodo__submit {
-  background-color: rgb(221, 221, 221);
-  opacity: 1;
-  padding: 6px 12px;
-}
+  &__list {
+    display: block;
+    &.is-closed {
+      display: none;
+    }
+  }
 
-.addTodo__submit.is-inactive {
-  opacity: 0.5;
-}
+  &__count {
+    font-size: 0.9em;
+    position: relative;
+    &::before {
+      z-index: -1;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      content: '';
+      display: inline-block;
+      background-color: rgb(221, 221, 221);
+      height: 24px;
+      width: 24px;
+      border-radius: 50%;
+    }
+  }
 
-.todoTask__toggle {
-  background: url(/img/up.svg) no-repeat;
-  background-size: contain;
-  display: inline-block;
-  height: 36px;
-  width: 36px;
-  cursor: pointer;
-}
+  &__check {
+    background: url(/img/circle.svg) no-repeat;
+    background-size: contain;
+    display: inline-block;
+    height: 36px;
+    width: 36px;
+    cursor: pointer;
+    &.checked {
+      background: url(/img/checked.svg) no-repeat;
+      background-size: contain;
+    }
+  }
 
-.todoTask__toggle.is-closed {
-  background: url(/img/down.svg) no-repeat;
-  background-size: contain;
-}
+  &__label {
+    border: none;
+    padding: 6px;
+    width: 540px;
+    &:focus-visible {
+      outline: 0.5px solid;
+    }
+    &:hover {
+      outline: rgb(221, 221, 221) 0.5px solid;
+    }
+  }
 
-.todoTask__list {
-  display: block;
-}
-
-.todoTask__list.is-closed {
-  display: none;
-}
-
-.todoTask__count {
-  font-size: 0.9em;
-  position: relative;
-}
-
-.todoTask__count::before {
-  z-index: -1;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  content: '';
-  display: inline-block;
-  background-color: rgb(221, 221, 221);
-  height: 24px;
-  width: 24px;
-  border-radius: 50%;
-}
-
-.todoTask__check {
-  background: url(/img/circle.svg) no-repeat;
-  background-size: contain;
-  display: inline-block;
-  height: 36px;
-  width: 36px;
-  cursor: pointer;
-}
-
-.todoTask__check.checked {
-  background: url(/img/checked.svg) no-repeat;
-  background-size: contain;
-}
-
-.todoTask__label {
-  border: none;
-  padding: 6px;
-  width: 540px;
-}
-
-.todoTask__label:focus-visible {
-  outline: 0.5px solid;
-}
-
-.todoTask__label:hover {
-  outline: rgb(221, 221, 221) 0.5px solid;
-}
-
-.todoTask__delete {
-  background: url(/img/trash.svg) no-repeat;
-  background-size: contain;
-  display: inline-block;
-  height: 36px;
-  width: 36px;
-  cursor: pointer;
+  &__delete {
+    background: url(/img/trash.svg) no-repeat;
+    background-size: contain;
+    display: inline-block;
+    height: 36px;
+    width: 36px;
+    cursor: pointer;
+  }
 }

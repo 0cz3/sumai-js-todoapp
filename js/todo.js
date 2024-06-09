@@ -49,13 +49,13 @@ export class Todo {
     li.appendChild(deleteButton);
   }
   toggleCompletedTodo(e) {
-    if (e.target.classList.contains('checked')) {
-      e.target.classList.remove('checked');
+    if (e.currentTarget.classList.contains('checked')) {
+      e.currentTarget.classList.remove('checked');
       this.completed = false;
       this.updateCount();
       return;
     }
-    e.target.classList.add('checked');
+    e.currentTarget.classList.add('checked');
     this.completed = true;
     this.updateCount();
   }
@@ -63,7 +63,7 @@ export class Todo {
    * todoを削除
    */
   deleteTodo(e) {
-    e.target.parentNode.remove();
+    e.currentTarget.parentNode.remove();
     todoTasks = todoTasks.filter((todoTask) => todoTask.id !== this.id);
     this.updateCount();
   }
@@ -71,11 +71,11 @@ export class Todo {
    * todoの内容を更新、入力内容が空欄の場合は更新しない
    */
   updateTodo(e) {
-    if (/^\S/.test(e.target.value)) {
-      e.target.value = htmlspecialchars(e.target.value);
-      this.inputValue = htmlspecialchars(e.target.value);
+    if (/^\S/.test(e.currentTarget.value)) {
+      e.currentTarget.value = htmlspecialchars(e.currentTarget.value);
+      this.inputValue = htmlspecialchars(e.currentTarget.value);
       return;
     }
-    e.target.value = this.inputValue;
+    e.currentTarget.value = this.inputValue;
   }
 }

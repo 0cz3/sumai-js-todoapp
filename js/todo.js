@@ -1,5 +1,5 @@
-import { escapeChars } from './escapeChars.js';
-import { unescapeChars } from './escapeChars.js';
+import { escapeChars } from './textUtility.js';
+import { unescapeChars } from './textUtility.js';
 
 let id = 0;
 let todoTasks = [];
@@ -10,7 +10,7 @@ export class Todo {
    * @return {Object} インスタンス自身
    */
   constructor(obj) {
-    this.ul = obj.ul;
+    this.todoTaskList = obj.todoTaskList;
     this.inputValue = escapeChars(obj.inputValue);
     this.counter = document.querySelector(obj.counter);
     this.id = id++;
@@ -31,23 +31,23 @@ export class Todo {
     todoTasks.push(this);
     this.updateCount();
 
-    const li = document.createElement('li');
-    li.className = 'todoTask__item';
+    const todoTaskItem = document.createElement('li');
+    todoTaskItem.className = 'todoTask__item';
 
     const checkButton = document.createElement('button');
     checkButton.className = 'todoTask__check js_todoTask_check';
 
-    const label = document.createElement('input');
-    label.className = 'todoTask__label js_todoTask_label';
-    label.value = unescapeChars(this.inputValue);
+    const todoTaskLabel = document.createElement('input');
+    todoTaskLabel.className = 'todoTask__label js_todoTask_label';
+    todoTaskLabel.value = unescapeChars(this.inputValue);
 
     const deleteButton = document.createElement('button');
     deleteButton.className = 'todoTask__delete js_todoTask_delete';
 
-    this.ul.appendChild(li);
-    li.appendChild(checkButton);
-    li.appendChild(label);
-    li.appendChild(deleteButton);
+    this.todoTaskList.appendChild(todoTaskItem);
+    todoTaskItem.appendChild(checkButton);
+    todoTaskItem.appendChild(todoTaskLabel);
+    todoTaskItem.appendChild(deleteButton);
   }
   toggleCompletedTodo(e) {
     if (e.currentTarget.classList.contains('checked')) {

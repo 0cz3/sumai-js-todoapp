@@ -1,26 +1,26 @@
 const submitButton = document.querySelector('.js_addTodo_submit');
-const ul = document.querySelector('.js_todoTask_list');
-const input = document.querySelector('.js_addTodo_input');
+const todoTaskList = document.querySelector('.js_todoTask_list');
+const inputField = document.querySelector('.js_addTodo_input');
 import { Todo } from './todo.js';
-import checkInput from './checkInput.js';
+import toggleSubmitActive from './toggleSubmitActive.js';
 import dropdown from './dropdown.js';
 
-checkInput();
-input.addEventListener('input', () => {
-  checkInput();
+toggleSubmitActive();
+inputField.addEventListener('input', () => {
+  toggleSubmitActive();
 });
 
 dropdown();
 
 submitButton.addEventListener('click', () => {
   const newTodo = new Todo({
-    ul: ul,
-    inputValue: input.value,
+    todoTaskList: todoTaskList,
+    inputValue: inputField.value,
     counter: '.js_todoTask_count',
   });
   newTodo.addTodo();
-  input.value = '';
-  checkInput();
+  inputField.value = '';
+  toggleSubmitActive();
 
   const checkButtons = document.querySelectorAll('.js_todoTask_check');
   checkButtons.forEach((checkButton) => {
@@ -41,7 +41,6 @@ submitButton.addEventListener('click', () => {
   const labels = document.querySelectorAll('.js_todoTask_label');
   labels.forEach((label) => {
     label.addEventListener('change', (e) => {
-      e.stopImmediatePropagation();
       newTodo.updateTodo(e);
     });
   });

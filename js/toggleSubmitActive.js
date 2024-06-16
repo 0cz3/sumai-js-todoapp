@@ -1,13 +1,13 @@
-const input = document.querySelector('.js_addTodo_input');
+const inputField = document.querySelector('.js_addTodo_input');
 const submitButton = document.querySelector('.js_addTodo_submit');
 import { IS_INACTIVE } from './constant.js';
 
 /**
  * 入力内容が空欄の場合はsubmitButtonを無効化
  */
-const checkInput = () => {
+const toggleSubmitActive = () => {
   const submitHasInactive = submitButton.classList.contains(IS_INACTIVE);
-  if (/^\S/.test(input.value)) {
+  if (/^\S/.test(inputField.value)) {
     submitButton.disabled = false;
     if (submitHasInactive) {
       submitButton.classList.remove(IS_INACTIVE);
@@ -20,4 +20,4 @@ const checkInput = () => {
   }
 };
 
-export default checkInput;
+export default toggleSubmitActive;

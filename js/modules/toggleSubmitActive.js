@@ -1,6 +1,6 @@
 const inputField = document.querySelector('.js_addTodo_input');
 const submitButton = document.querySelector('.js_addTodo_submit');
-import { IS_INACTIVE } from './constant.js';
+import { IS_INACTIVE } from '../constants.js';
 
 /**
  * 入力内容が空欄の場合はsubmitButtonを無効化

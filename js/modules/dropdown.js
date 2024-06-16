@@ -1,6 +1,6 @@
 const toggle = document.querySelector('.js_todoTask_toggle');
 const todoTaskList = document.querySelector('.js_todoTask_list');
-import { IS_CLOSED } from './constant.js';
+import { IS_CLOSED } from '../constants.js';
 
 /**
  * todoタスクの表示非表示切り替え

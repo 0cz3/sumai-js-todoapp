@@ -1,5 +1,4 @@
-import { escapeChars } from './textUtility.js';
-import { unescapeChars } from './textUtility.js';
+import { escapeChars, unescapeChars } from './textUtility.js';
 
 let id = 0;
 let todoTasks = [];
@@ -10,11 +9,11 @@ export class Todo {
    * @return {Object} インスタンス自身
    */
   constructor(obj) {
-    this.todoTaskList = obj.todoTaskList;
-    this.inputValue = escapeChars(obj.inputValue);
-    this.counter = document.querySelector(obj.counter);
-    this.id = id++;
-    this.completed = false;
+    this._todoTaskList = obj.todoTaskList;
+    this._inputValue = escapeChars(obj.inputValue);
+    this._counter = document.querySelector(obj.counter);
+    this._id = id++;
+    this._completed = false;
   }
   /**
    * カウンターの値を未完了のtodo数に更新
@@ -22,7 +21,7 @@ export class Todo {
   updateCount() {
     const incompleteTasks = todoTasks.filter((todoTask) => todoTask.completed === false);
     const incompleteCount = incompleteTasks.length;
-    this.counter.innerHTML = incompleteCount;
+    this._counter.innerHTML = incompleteCount;
   }
   /**
    * todoを追加、DOMを変化させてtodo表示
@@ -39,12 +38,12 @@ export class Todo {
 
     const todoTaskLabel = document.createElement('input');
     todoTaskLabel.className = 'todoTask__label js_todoTask_label';
-    todoTaskLabel.value = unescapeChars(this.inputValue);
+    todoTaskLabel.value = unescapeChars(this._inputValue);
 
     const deleteButton = document.createElement('button');
     deleteButton.className = 'todoTask__delete js_todoTask_delete';
 
-    this.todoTaskList.appendChild(todoTaskItem);
+    this._todoTaskList.appendChild(todoTaskItem);
     todoTaskItem.appendChild(checkButton);
     todoTaskItem.appendChild(todoTaskLabel);
     todoTaskItem.appendChild(deleteButton);
@@ -52,12 +51,12 @@ export class Todo {
   toggleCompletedTodo(e) {
     if (e.currentTarget.classList.contains('checked')) {
       e.currentTarget.classList.remove('checked');
-      this.completed = false;
+      this._completed = false;
       this.updateCount();
       return;
     }
     e.currentTarget.classList.add('checked');
-    this.completed = true;
+    this._completed = true;
     this.updateCount();
   }
   /**
@@ -65,7 +64,7 @@ export class Todo {
    */
   deleteTodo(e) {
     e.currentTarget.parentNode.remove();
-    todoTasks = todoTasks.filter((todoTask) => todoTask.id !== this.id);
+    todoTasks = todoTasks.filter((todoTask) => todoTask.id !== this._id);
     this.updateCount();
   }
   /**
@@ -74,9 +73,9 @@ export class Todo {
   updateTodo(e) {
     if (/^\S/.test(e.currentTarget.value)) {
       e.currentTarget.value = escapeChars(e.currentTarget.value);
-      this.inputValue = escapeChars(e.currentTarget.value);
+      this._inputValue = escapeChars(e.currentTarget.value);
       return;
     }
-    e.currentTarget.value = this.inputValue;
+    e.currentTarget.value = this._inputValue;
   }
 }

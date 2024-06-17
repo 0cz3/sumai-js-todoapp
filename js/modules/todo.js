@@ -43,7 +43,7 @@ export class Todo {
     const deleteButton = document.createElement('button');
     deleteButton.className = 'todoTask__delete js_todoTask_delete';
     
-    this.addEventListeners(todoTaskItem, checkButton, todoTaskLabel, deleteButton);
+    this.addEventListeners(checkButton, todoTaskLabel, deleteButton);
     
     this._todoTaskList.appendChild(todoTaskItem);
     todoTaskItem.appendChild(checkButton);
@@ -66,7 +66,7 @@ export class Todo {
    */
   deleteTodo = (e) => {
     e.currentTarget.parentNode.remove();
-    todoTasks = todoTasks.filter((todoTask) => todoTask.id !== this._id);
+    todoTasks = todoTasks.filter((todoTask) => todoTask._id !== this._id);
     this.updateCount();
   };
   /**

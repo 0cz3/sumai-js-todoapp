@@ -1,7 +1,10 @@
 import { IS_INACTIVE } from '../constants.js';
 
 /**
- * 入力内容が空欄の場合はsubmitButtonを無効化
+ * input欄の入力状況により送信ボタンのステータスを切り替え
+ * @param {HTMLInputElement} inputField
+ * @param {HTMLButtonElement} submitButton
+ * @return {void}
  */
 const toggleSubmitActive = (inputField, submitButton) => {
   const submitHasInactive = submitButton.classList.contains(IS_INACTIVE);

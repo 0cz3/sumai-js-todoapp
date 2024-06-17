@@ -5,8 +5,8 @@ let todoTasks = [];
 
 export class Todo {
   /**
-   * constructor、inputValueをエスケープ
-   * @return {Object} インスタンス自身
+   * @constructor
+   * @param {Object} obj
    */
   constructor(obj) {
     this.todoTaskList = obj.todoTaskList;
@@ -24,7 +24,7 @@ export class Todo {
     this.counter.innerHTML = incompleteCount;
   }
   /**
-   * todoを追加、DOMを変化させてtodo表示
+   * todoを追加、DOMを作成
    */
   addTodo() {
     todoTasks.push(this);
@@ -42,14 +42,19 @@ export class Todo {
 
     const deleteButton = document.createElement('button');
     deleteButton.className = 'todoTask__delete js_todoTask_delete';
-    
+
     this.todoAddEventListeners(checkButton, todoTaskLabel, deleteButton);
-    
+
     this.todoTaskList.appendChild(todoTaskItem);
     todoTaskItem.appendChild(checkButton);
     todoTaskItem.appendChild(todoTaskLabel);
     todoTaskItem.appendChild(deleteButton);
   }
+  /**
+   * todoの完了状態の切り替え
+   * @param {Event} e
+   * @return {void}
+   */
   toggleCompletedTodo = (e) => {
     if (e.currentTarget.classList.contains('checked')) {
       e.currentTarget.classList.remove('checked');
@@ -63,6 +68,7 @@ export class Todo {
   };
   /**
    * todoを削除
+   * @param {Event} e
    */
   deleteTodo = (e) => {
     e.currentTarget.parentNode.remove();
@@ -70,7 +76,9 @@ export class Todo {
     this.updateCount();
   };
   /**
-   * todoの内容を更新、入力内容が空欄の場合は更新しない
+   * todoの入力内容を更新
+   * @param {Event} e
+   * @return {void}
    */
   updateTodo = (e) => {
     if (/^\S/.test(e.currentTarget.value)) {
@@ -80,6 +88,12 @@ export class Todo {
     }
     e.currentTarget.value = unescapeChars(this.inputValue);
   };
+  /**
+   * todoタスクの状態変化時のイベントリスナーを追加
+   * @param {HTMLInputElement} checkButton
+   * @param {HTMLInputElement} todoTaskLabel
+   * @param {HTMLButtonElement} deleteButton
+   */
   todoAddEventListeners(checkButton, todoTaskLabel, deleteButton) {
     checkButton.addEventListener('click', this.toggleCompletedTodo);
     deleteButton.addEventListener('click', this.deleteTodo);

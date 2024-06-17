@@ -1,3 +1,8 @@
+/**
+ * エスケープ処理を実行
+ * @param {string} str
+ * @return {string}
+ */
 export const escapeChars = (str) => {
   if (str == null) return '';
 
@@ -8,7 +13,11 @@ export const escapeChars = (str) => {
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#039;');
 };
-
+/**
+ * 非エスケープ処理を実行
+ * @param {string} str
+ * @return {string}
+ */
 export const unescapeChars = (str) => {
   if (str == null) return '';
 

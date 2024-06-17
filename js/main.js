@@ -7,6 +7,9 @@ import { Todo } from './modules/todo.js';
 import toggleSubmitActive from './modules/toggleSubmitActive.js';
 import dropdown from './modules/dropdown.js';
 
+/**
+ * Todoインスタンス生成、入力欄の初期化
+ */
 const newTodoTasks = () => {
   const newTodo = new Todo({
     todoTaskList: todoTaskList,
@@ -17,7 +20,9 @@ const newTodoTasks = () => {
   inputField.value = '';
   toggleSubmitActive(inputField, submitButton);
 };
-
+/**
+ * 入力欄の変更・送信時のイベントリスナーを追加
+ */
 const submitAddEventListener = () => {
   inputField.addEventListener('input', () => {
     toggleSubmitActive(inputField, submitButton);
@@ -32,7 +37,9 @@ const submitAddEventListener = () => {
     }
   });
 };
-
+/**
+ * window読み込み時の処理を実行
+ */
 const init = () => {
   toggleSubmitActive(inputField, submitButton);
   dropdown(toggleButton, todoTaskList);

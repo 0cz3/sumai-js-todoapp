@@ -9,19 +9,19 @@ export class Todo {
    * @return {Object} インスタンス自身
    */
   constructor(obj) {
-    this._todoTaskList = obj.todoTaskList;
-    this._inputValue = escapeChars(obj.inputValue);
-    this._counter = document.querySelector(obj.counter);
-    this._id = id++;
-    this._completed = false;
+    this.todoTaskList = obj.todoTaskList;
+    this.inputValue = escapeChars(obj.inputValue);
+    this.counter = document.querySelector(obj.counter);
+    this.id = id++;
+    this.completed = false;
   }
   /**
    * カウンターの値を未完了のtodo数に更新
    */
   updateCount() {
-    const incompleteTasks = todoTasks.filter((todoTask) => todoTask._completed === false);
+    const incompleteTasks = todoTasks.filter((todoTask) => todoTask.completed === false);
     const incompleteCount = incompleteTasks.length;
-    this._counter.innerHTML = incompleteCount;
+    this.counter.innerHTML = incompleteCount;
   }
   /**
    * todoを追加、DOMを変化させてtodo表示
@@ -38,14 +38,14 @@ export class Todo {
 
     const todoTaskLabel = document.createElement('input');
     todoTaskLabel.className = 'todoTask__label js_todoTask_label';
-    todoTaskLabel.value = unescapeChars(this._inputValue);
+    todoTaskLabel.value = unescapeChars(this.inputValue);
 
     const deleteButton = document.createElement('button');
     deleteButton.className = 'todoTask__delete js_todoTask_delete';
     
-    this.addEventListeners(checkButton, todoTaskLabel, deleteButton);
+    this.todoAddEventListeners(checkButton, todoTaskLabel, deleteButton);
     
-    this._todoTaskList.appendChild(todoTaskItem);
+    this.todoTaskList.appendChild(todoTaskItem);
     todoTaskItem.appendChild(checkButton);
     todoTaskItem.appendChild(todoTaskLabel);
     todoTaskItem.appendChild(deleteButton);
@@ -53,12 +53,12 @@ export class Todo {
   toggleCompletedTodo = (e) => {
     if (e.currentTarget.classList.contains('checked')) {
       e.currentTarget.classList.remove('checked');
-      this._completed = false;
+      this.completed = false;
       this.updateCount();
       return;
     }
     e.currentTarget.classList.add('checked');
-    this._completed = true;
+    this.completed = true;
     this.updateCount();
   };
   /**
@@ -66,7 +66,7 @@ export class Todo {
    */
   deleteTodo = (e) => {
     e.currentTarget.parentNode.remove();
-    todoTasks = todoTasks.filter((todoTask) => todoTask._id !== this._id);
+    todoTasks = todoTasks.filter((todoTask) => todoTask.id !== this.id);
     this.updateCount();
   };
   /**
@@ -75,12 +75,12 @@ export class Todo {
   updateTodo = (e) => {
     if (/^\S/.test(e.currentTarget.value)) {
       e.currentTarget.value = escapeChars(e.currentTarget.value);
-      this._inputValue = escapeChars(e.currentTarget.value);
+      this.inputValue = escapeChars(e.currentTarget.value);
       return;
     }
-    e.currentTarget.value = this._inputValue;
+    e.currentTarget.value = this.inputValue;
   };
-  addEventListeners(checkButton, todoTaskLabel, deleteButton) {
+  todoAddEventListeners(checkButton, todoTaskLabel, deleteButton) {
     checkButton.addEventListener('click', this.toggleCompletedTodo);
     deleteButton.addEventListener('click', this.deleteTodo);
     todoTaskLabel.addEventListener('change', this.updateTodo);

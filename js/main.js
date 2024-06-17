@@ -28,7 +28,6 @@ const submitAddEventListener = () => {
   inputForm.addEventListener('submit', (e) => {
     e.preventDefault();
     if (/^\S/.test(inputField.value)) {
-      toggleSubmitActive(inputField, submitButton);
       newTodoTasks();
     }
   });
@@ -37,7 +36,7 @@ const submitAddEventListener = () => {
 const init = () => {
   toggleSubmitActive(inputField, submitButton);
   dropdown(toggleButton, todoTaskList);
-  submitAddEventListener(inputField, submitButton);
+  submitAddEventListener();
 };
 
 init();

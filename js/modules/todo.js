@@ -74,11 +74,11 @@ export class Todo {
    */
   updateTodo = (e) => {
     if (/^\S/.test(e.currentTarget.value)) {
-      e.currentTarget.value = escapeChars(e.currentTarget.value);
       this.inputValue = escapeChars(e.currentTarget.value);
+      e.currentTarget.value = unescapeChars(this.inputValue);
       return;
     }
-    e.currentTarget.value = this.inputValue;
+    e.currentTarget.value = unescapeChars(this.inputValue);
   };
   todoAddEventListeners(checkButton, todoTaskLabel, deleteButton) {
     checkButton.addEventListener('click', this.toggleCompletedTodo);

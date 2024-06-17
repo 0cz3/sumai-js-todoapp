@@ -4,8 +4,6 @@
  * @return {string}
  */
 export const escapeChars = (str) => {
-  if (str == null) return '';
-
   return String(str)
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
@@ -19,8 +17,6 @@ export const escapeChars = (str) => {
  * @return {string}
  */
 export const unescapeChars = (str) => {
-  if (str == null) return '';
-
   return String(str)
     .replace(/&amp;/g, '&')
     .replace(/&lt;/g, '<')

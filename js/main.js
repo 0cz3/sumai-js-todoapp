@@ -1,16 +1,17 @@
 const submitButton = document.querySelector('.js_addTodo_submit');
 const todoTaskList = document.querySelector('.js_todoTask_list');
 const inputField = document.querySelector('.js_addTodo_input');
+const toggleButton = document.querySelector('.js_todoTask_toggle');
 import { Todo } from './modules/todo.js';
 import toggleSubmitActive from './modules/toggleSubmitActive.js';
 import dropdown from './modules/dropdown.js';
 
-toggleSubmitActive();
+toggleSubmitActive(inputField, submitButton);
 inputField.addEventListener('input', () => {
-  toggleSubmitActive();
+  toggleSubmitActive(inputField, submitButton);
 });
 
-dropdown();
+dropdown(toggleButton, todoTaskList);
 
 submitButton.addEventListener('click', () => {
   const newTodo = new Todo({
@@ -20,5 +21,5 @@ submitButton.addEventListener('click', () => {
   });
   newTodo.addTodo();
   inputField.value = '';
-  toggleSubmitActive();
+  toggleSubmitActive(inputField, submitButton);
 });

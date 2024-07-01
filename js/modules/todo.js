@@ -23,12 +23,17 @@ export class Todo {
     this.counter.innerHTML = incompleteCount;
   }
   /**
-   * todoを追加、DOMを作成
+   * todoを追加
    */
   addTodo() {
     Todo.todoTasks.push(this);
     this.updateCount();
-
+    this.createTodoElements();
+  }
+  /**
+   * DOMを作成
+   */
+  createTodoElements() {
     const todoTaskItem = document.createElement('li');
     todoTaskItem.className = 'todoTask__item';
 

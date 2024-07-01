@@ -1,9 +1,8 @@
 import { escapeChars, unescapeChars } from './textUtility.js';
 
-let id = 0;
-let todoTasks = [];
-
 export class Todo {
+  static id = 0;
+  static todoTasks = [];
   /**
    * @constructor
    * @param {Object} obj
@@ -12,14 +11,14 @@ export class Todo {
     this.todoTaskList = obj.todoTaskList;
     this.inputValue = escapeChars(obj.inputValue);
     this.counter = document.querySelector(obj.counter);
-    this.id = id++;
+    this.id = Todo.id++;
     this.completed = false;
   }
   /**
    * カウンターの値を未完了のtodo数に更新
    */
   updateCount() {
-    const incompleteTasks = todoTasks.filter((todoTask) => todoTask.completed === false);
+    const incompleteTasks = Todo.todoTasks.filter((todoTask) => todoTask.completed === false);
     const incompleteCount = incompleteTasks.length;
     this.counter.innerHTML = incompleteCount;
   }
@@ -27,7 +26,7 @@ export class Todo {
    * todoを追加、DOMを作成
    */
   addTodo() {
-    todoTasks.push(this);
+    Todo.todoTasks.push(this);
     this.updateCount();
 
     const todoTaskItem = document.createElement('li');
@@ -72,7 +71,7 @@ export class Todo {
    */
   deleteTodo = (e) => {
     e.currentTarget.parentNode.remove();
-    todoTasks = todoTasks.filter((todoTask) => todoTask.id !== this.id);
+    Todo.todoTasks = Todo.todoTasks.filter((todoTask) => todoTask.id !== this.id);
     this.updateCount();
   };
   /**

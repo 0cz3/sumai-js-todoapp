@@ -1,24 +1,18 @@
-import { IS_INACTIVE } from '../constants.js';
+import { IS_ACTIVE } from '../constants.js';
 
 /**
  * input欄の入力状況により送信ボタンのステータスを切り替え
- * @param {HTMLInputElement} inputField
+ * @param {string} inputValue inputfieldの入力値
  * @param {HTMLButtonElement} submitButton
  * @return {void}
  */
-const toggleSubmitActive = (inputField, submitButton) => {
-  const submitHasInactive = submitButton.classList.contains(IS_INACTIVE);
-  if (/^\S/.test(inputField.value)) {
-    submitButton.disabled = false;
-    if (submitHasInactive) {
-      submitButton.classList.remove(IS_INACTIVE);
-    }
+const toggleSubmitActive = (inputValue, submitButton) => {
+  submitButton.disabled = !/^\S/.test(inputValue);
+  if (/^\S/.test(inputValue)) {
+    submitButton.classList.add(IS_ACTIVE);
     return;
   }
-  submitButton.disabled = true;
-  if (!submitHasInactive) {
-    submitButton.classList.add(IS_INACTIVE);
-  }
+  submitButton.classList.remove(IS_ACTIVE);
 };
 
 export default toggleSubmitActive;

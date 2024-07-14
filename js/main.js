@@ -18,14 +18,15 @@ const newTodoTasks = () => {
   });
   newTodo.addTodo();
   inputField.value = '';
-  toggleSubmitActive(inputField, submitButton);
+  toggleSubmitActive(inputField.value, submitButton);
 };
+
 /**
  * 入力欄の変更・送信時のイベントリスナーを追加
  */
 const submitAddEventListener = () => {
   inputField.addEventListener('input', () => {
-    toggleSubmitActive(inputField, submitButton);
+    toggleSubmitActive(inputField.value, submitButton);
   });
   submitButton.addEventListener('click', () => {
     newTodoTasks();
@@ -41,7 +42,7 @@ const submitAddEventListener = () => {
  * window読み込み時の処理を実行
  */
 const init = () => {
-  toggleSubmitActive(inputField, submitButton);
+  toggleSubmitActive(inputField.value, submitButton);
   dropdown(toggleButton, todoTaskList);
   submitAddEventListener();
 };

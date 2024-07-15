@@ -1,29 +1,7 @@
 .todo {
-  padding: 80px 120px;
-}
-
-.addTodo {
-  display: flex;
-  gap: 12px;
-  padding-left: 48px;
-  align-items: center;
-}
-
-.todoTask {
+  max-width: min(600px, calc(70% + 80px));
+  padding-top: min(80px, 8%);
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
-  margin-top: 12px;
-  gap: 12px;
-}
-
-.todoTask__header {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-}
-
-.todoTask__list {
-  display: flex;
-  gap: 12px;
-  align-items: center;
 }

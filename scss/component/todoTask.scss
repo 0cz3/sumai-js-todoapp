@@ -1,0 +1,92 @@
+.todoTask {
+  display: flex;
+  flex-direction: column;
+  margin-top: 12px;
+  gap: 12px;
+
+  &__header {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  &__item {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  &__toggle {
+    background: url(/img/up.svg) no-repeat;
+    background-size: contain;
+    display: inline-block;
+    height: 36px;
+    width: 36px;
+    cursor: pointer;
+    &.is-closed {
+      background: url(/img/down.svg) no-repeat;
+      background-size: contain;
+    }
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    &.is-closed {
+      display: none;
+    }
+  }
+
+  &__count {
+    font-size: 0.9em;
+    position: relative;
+    &::before {
+      z-index: -1;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      content: '';
+      display: inline-block;
+      background-color: rgb(221, 221, 221);
+      height: 24px;
+      width: 24px;
+      border-radius: 50%;
+    }
+  }
+
+  &__check {
+    background: url(/img/circle.svg) no-repeat;
+    background-size: contain;
+    display: inline-block;
+    height: 28px;
+    width: 28px;
+    cursor: pointer;
+    &.checked {
+      background: url(/img/checked.svg) no-repeat;
+      background-size: contain;
+    }
+  }
+
+  &__label {
+    border: none;
+    padding: 6px;
+    flex-grow: 1;
+    &:focus-visible {
+      outline: 0.5px solid;
+    }
+    &:hover {
+      outline: rgb(221, 221, 221) 0.5px solid;
+    }
+  }
+
+  &__delete {
+    background: url(/img/trash.svg) no-repeat;
+    background-size: contain;
+    display: inline-block;
+    height: 28px;
+    width: 28px;
+    cursor: pointer;
+  }
+}

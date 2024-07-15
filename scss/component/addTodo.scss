@@ -1,0 +1,27 @@
+.addTodo {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+
+    &__form {
+      flex-grow: 1;
+    }
+    
+    &__input {
+      width: 100%;
+      padding: 6px;
+      &:focus-visible {
+        outline: 1px solid;
+      }
+    }
+
+    &__submit {
+      white-space: nowrap;
+      background-color: rgb(221, 221, 221);
+      opacity: 0.5;
+      padding: 6px 12px;
+      &.is-active {
+        opacity: 1;
+      }
+    }
+  }

@@ -1,11 +1,11 @@
+import { Todo } from './modules/todo.js';
+import toggleSubmitActive from './modules/toggleSubmitActive.js';
+import dropdown from './modules/dropdown.js';
 const submitButton = document.querySelector('.js_addTodo_submit');
 const todoTaskList = document.querySelector('.js_todoTask_list');
 const inputForm = document.querySelector('.js_addTodo_form');
 const inputField = document.querySelector('.js_addTodo_input');
 const toggleButton = document.querySelector('.js_todoTask_toggle');
-import { Todo } from './modules/todo.js';
-import toggleSubmitActive from './modules/toggleSubmitActive.js';
-import dropdown from './modules/dropdown.js';
 
 /**
  * Todoインスタンス生成、入力欄の初期化
@@ -42,7 +42,6 @@ const submitAddEventListener = () => {
  * window読み込み時の処理を実行
  */
 const init = () => {
-  toggleSubmitActive(inputField.value, submitButton);
   dropdown(toggleButton, todoTaskList);
   submitAddEventListener();
 };

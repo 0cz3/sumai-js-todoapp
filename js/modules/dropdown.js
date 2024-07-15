@@ -2,15 +2,18 @@ import { IS_CLOSED } from '../constants.js';
 
 /**
  * todoタスクの表示非表示切り替え
+ * @param {HTMLButtonElement} toggleButton
+ * @param {HTMLButtonElement} todoTaskList
+ * @return {void}
  */
 const dropdown = (toggleButton, todoTaskList) => {
-  toggleButton.addEventListener('click', (e) => {
-    if (e.currentTarget.classList.contains(IS_CLOSED)) {
-      e.currentTarget.classList.remove(IS_CLOSED);
+  toggleButton.addEventListener('click', ({currentTarget}) => {
+    if (currentTarget.classList.contains(IS_CLOSED)) {
+      currentTarget.classList.remove(IS_CLOSED);
       todoTaskList.classList.remove(IS_CLOSED);
       return;
     }
-    e.currentTarget.classList.add(IS_CLOSED);
+    currentTarget.classList.add(IS_CLOSED);
     todoTaskList.classList.add(IS_CLOSED);
   });
 };

@@ -1,18 +1,18 @@
 import { escapeChars, unescapeChars } from './textUtility.js';
+import { getStorageTodoTasks, setStorageTodoTasks } from './localStorage.js';
 
 export class Todo {
-  static id = 0;
-  static todoTasks = [];
+  static todoTasks = getStorageTodoTasks();
   /**
    * @constructor
    * @param {Object} obj
    */
-  constructor({ todoTaskList, inputValue, counter }) {
-    this.todoTaskList = todoTaskList;
-    this.inputValue = escapeChars(inputValue);
-    this.counter = document.querySelector(counter);
-    this.id = Todo.id++;
-    this.completed = false;
+  constructor(obj) {
+    this.todoTaskList = obj.todoTaskList;
+    this.inputValue = escapeChars(obj.inputValue);
+    this.counter = document.querySelector(obj.counter);
+    this.id = obj.id || crypto.randomUUID();
+    this.completed = obj.completed;
   }
   /**
    * カウンターの値を未完了のtodo数に更新
@@ -27,8 +27,9 @@ export class Todo {
    */
   addTodo() {
     Todo.todoTasks = [...Todo.todoTasks, this];
-    this.updateCount();
     this.createTodoElements();
+    setStorageTodoTasks(Todo.todoTasks);
+    this.updateCount();
   }
   /**
    * todoのDOMを作成
@@ -47,7 +48,10 @@ export class Todo {
     };
 
     const todoTaskItem = createTodoElement('li', 'todoTask__item js_todoTask_item');
-    const checkButton = createTodoElement('button', 'todoTask__check js_todoTask_check');
+    const checkButton = createTodoElement(
+      'button',
+      this.completed ? 'todoTask__check js_todoTask_check checked' : 'todoTask__check js_todoTask_check'
+    );
     const todoTaskLabel = createTodoElement('input', 'todoTask__label js_todoTask_label');
     todoTaskLabel.value = unescapeChars(this.inputValue);
     const deleteButton = createTodoElement('button', 'todoTask__delete js_todoTask_delete');
@@ -65,13 +69,19 @@ export class Todo {
    * @return {void}
    */
   toggleCompletedTodo = ({ currentTarget }) => {
-    this.completed = !currentTarget.classList.contains('checked');
+    //何だかネストが深い
+    Todo.todoTasks.map((todoTask) => {
+      if (todoTask.id === this.id) {
+        todoTask.completed = !todoTask.completed;
+        if (todoTask.completed) {
+          currentTarget.classList.add('checked');
+          return;
+        }
+        currentTarget.classList.remove('checked');
+      }
+    });
+    setStorageTodoTasks(Todo.todoTasks);
     this.updateCount();
-    if (this.completed) {
-      currentTarget.classList.add('checked');
-      return;
-    }
-    currentTarget.classList.remove('checked');
   };
   /**
    * todoを削除
@@ -80,6 +90,7 @@ export class Todo {
   deleteTodo = ({ currentTarget }) => {
     currentTarget.closest('.js_todoTask_item').remove();
     Todo.todoTasks = Todo.todoTasks.filter((todoTask) => todoTask.id !== this.id);
+    setStorageTodoTasks(Todo.todoTasks);
     this.updateCount();
   };
   /**
@@ -88,10 +99,15 @@ export class Todo {
    * @return {void}
    */
   updateTodo = ({ currentTarget }) => {
-    if (/^\S/.test(currentTarget.value)) {
-      this.inputValue = escapeChars(currentTarget.value);
-    }
-    currentTarget.value = unescapeChars(this.inputValue);
+    Todo.todoTasks.map((todoTask) => {
+      if (todoTask.id === this.id) {
+        if (/^\S/.test(currentTarget.value)) {
+          todoTask.inputValue = escapeChars(currentTarget.value);
+          setStorageTodoTasks(Todo.todoTasks);
+        }
+        currentTarget.value = unescapeChars(todoTask.inputValue);
+      }
+    });
   };
   /**
    * todoタスクの状態変化時のイベントリスナーを追加

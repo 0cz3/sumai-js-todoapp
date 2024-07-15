@@ -1,4 +1,5 @@
 import { Todo } from './modules/todo.js';
+import { getStorageTodoTasks } from './modules/localStorage.js';
 import toggleSubmitActive from './modules/toggleSubmitActive.js';
 import dropdown from './modules/dropdown.js';
 const submitButton = document.querySelector('.js_addTodo_submit');
@@ -6,6 +7,20 @@ const todoTaskList = document.querySelector('.js_todoTask_list');
 const inputForm = document.querySelector('.js_addTodo_form');
 const inputField = document.querySelector('.js_addTodo_input');
 const toggleButton = document.querySelector('.js_todoTask_toggle');
+
+const setTodoTasks = () => {
+  getStorageTodoTasks().map((todoTask) => {
+    const newTodo = new Todo({
+      todoTaskList,
+      inputValue: todoTask.inputValue,
+      counter: '.js_todoTask_count',
+      id: todoTask.id,
+      completed: todoTask.completed,
+    });
+    newTodo.createTodoElements();
+    newTodo.updateCount();
+  });
+};
 
 /**
  * Todoインスタンス生成、入力欄の初期化
@@ -15,6 +30,7 @@ const newTodoTasks = () => {
     todoTaskList: todoTaskList,
     inputValue: inputField.value,
     counter: '.js_todoTask_count',
+    completed: false,
   });
   newTodo.addTodo();
   inputField.value = '';
@@ -42,6 +58,7 @@ const submitAddEventListener = () => {
  * window読み込み時の処理を実行
  */
 const init = () => {
+  setTodoTasks();
   dropdown(toggleButton, todoTaskList);
   submitAddEventListener();
 };

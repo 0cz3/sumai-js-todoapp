@@ -1,0 +1,52 @@
+name: deploy
+
+on:
+  # push/PullRequest/Actionsタブから手動で実行
+  push:
+    branches:
+      - '**'
+  pull_request:
+    branches:
+      - '**'
+  workflow_dispatch:
+
+# GITHUB_TOKENのパーミッション
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  deploy:
+    # 実行環境
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      # リポジトリのコードをチェックアウト
+      - name: Checkout
+        uses: actions/checkout@v4
+      # Node.jsセットアップ
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+      # npm ci実行
+      - name: Install dependencies
+        run: npm ci
+      # npm run build実行
+      - name: Build
+        run: npm run build
+      # GitHub Pagesをセットアップ
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # dist フォルダーのアップロード ルートディレクトリからの相対パス
+          path: 'dist'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

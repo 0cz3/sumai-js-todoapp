@@ -56,6 +56,15 @@
     }
   }
 
+  &__selectWrapper {
+    margin-left: auto;
+  }
+
+  &__select {
+    padding: 2px;
+    text-align: center;
+  }
+
   &__check {
     background: url(/img/circle.svg) no-repeat;
     background-size: contain;

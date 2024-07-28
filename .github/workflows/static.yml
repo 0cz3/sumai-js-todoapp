@@ -4,7 +4,7 @@ name: Deploy static content to Pages
 on:
   # トリガー： feature/fixブランチへのプッシュ
   push:
-    branches: ['develop/base01']
+    branches: ['feature/fix']
 
   #トリガー： Actionsタブからの手動変更
   workflow_dispatch:

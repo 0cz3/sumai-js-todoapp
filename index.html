@@ -9,12 +9,12 @@
   </head>
   <body>
     <div class="todo">
-      <div class="addTodo">
-        <form class="addTodo__form js_addTodo_form">
-          <input class="addTodo__input js_addTodo_input" placeholder="タスクを入力して追加" />
-        </form>
-        <button class="addTodo__submit js_addTodo_submit">追 加</button>
-      </div>
+      <form class="addTodo js_addTodo_form">
+        <input type="text" class="addTodo__input js_addTodo_input" placeholder="タスクを入力して追加" />
+        <label for="inputDate" class="addTodo__dateLabel">期限:</label>
+        <input type="date" id="inputDate" class="addTodo__inputDate js_addTodo_inputDate" placeholder="タスクを入力して追加" />
+        <input type="submit" class="addTodo__submit js_addTodo_submit" value="追加" />
+      </form>
       <div class="todoTask">
         <div class="todoTask__header">
           <button class="todoTask__toggle js_todoTask_toggle"></button>

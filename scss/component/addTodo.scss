@@ -1,27 +1,36 @@
 .addTodo {
-    display: flex;
-    gap: 12px;
-    align-items: center;
+  text-align: end;
 
-    &__form {
-      flex-grow: 1;
-    }
-    
-    &__input {
-      width: 100%;
-      padding: 6px;
-      &:focus-visible {
-        outline: 1px solid;
-      }
-    }
-
-    &__submit {
-      white-space: nowrap;
-      background-color: rgb(221, 221, 221);
-      opacity: 0.5;
-      padding: 6px 12px;
-      &.is-active {
-        opacity: 1;
-      }
+  &__input {
+    display: block;
+    width: 100%;
+    padding: 6px;
+    margin-bottom: 8px;
+    &:focus-visible {
+      outline: 1px solid;
     }
   }
+
+  &__dateLabel {
+    font-size: 0.9em;
+  }
+
+  &__inputDate {
+    font-size: 0.9em;
+    padding: 2px;
+  }
+
+  &__submit {
+    margin-left: 6px;
+    background-color: #dddddd;
+    opacity: 0.5;
+    padding: 4px 12px;
+    border: solid 1px ;
+    border-radius: 2px;
+    &.is-active {
+      opacity: 1;
+      background-color: #b0ffaf;
+      cursor: pointer;
+    }
+  }
+}

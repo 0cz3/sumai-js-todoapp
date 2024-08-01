@@ -10,6 +10,7 @@ export class Todo {
   constructor(obj) {
     this.todoTaskList = obj.todoTaskList;
     this.inputValue = escapeChars(obj.inputValue);
+    this.inputDate = obj.inputDate;
     this.counter = document.querySelector(obj.counter);
     this.id = obj.id || crypto.randomUUID();
     this.completed = obj.completed;
@@ -46,7 +47,7 @@ export class Todo {
       todoElement.className = className;
       return todoElement;
     };
-
+    //無駄な記述が多い、後でなんとかしたい
     const todoTaskItem = createTodoElement('li', 'todoTask__item js_todoTask_item');
     const checkButton = createTodoElement(
       'button',
@@ -54,14 +55,18 @@ export class Todo {
     );
     const todoTaskLabel = createTodoElement('input', 'todoTask__label js_todoTask_label');
     todoTaskLabel.value = unescapeChars(this.inputValue);
+    const todoDateLabel = createTodoElement('input', 'todoTask__dateLabel js_todoTask_dateLabel');
+    todoDateLabel.setAttribute('type', 'date');
+    todoDateLabel.value = this.inputDate;
     const deleteButton = createTodoElement('button', 'todoTask__delete js_todoTask_delete');
 
     todoTaskItem.appendChild(checkButton);
     todoTaskItem.appendChild(todoTaskLabel);
+    todoTaskItem.appendChild(todoDateLabel);
     todoTaskItem.appendChild(deleteButton);
     this.todoTaskList.appendChild(todoTaskItem);
 
-    this.todoAddEventListeners(checkButton, todoTaskLabel, deleteButton);
+    this.todoAddEventListeners(checkButton, todoTaskLabel, deleteButton ,todoDateLabel);
   }
   /**
    * todoの完了状態の切り替え
@@ -99,13 +104,25 @@ export class Todo {
    * @return {void}
    */
   updateTodo = ({ currentTarget }) => {
-    Todo.todoTasks.map((todoTask) => {
-      if (todoTask.id === this.id) {
+    const isDate = currentTarget.type === "date";
+    const updateDate = (todoTask) =>{
+      todoTask.inputDate = currentTarget.value;
+      setStorageTodoTasks(Todo.todoTasks);
+    }
+    const updateValue = (todoTask) =>{
         if (/^\S/.test(currentTarget.value)) {
           todoTask.inputValue = escapeChars(currentTarget.value);
           setStorageTodoTasks(Todo.todoTasks);
         }
         currentTarget.value = unescapeChars(todoTask.inputValue);
+    }
+    Todo.todoTasks.map((todoTask) => {
+      if (todoTask.id === this.id) {
+        if(isDate){
+          updateDate(todoTask);
+          return;
+        }
+        updateValue(todoTask);
       }
     });
   };
@@ -114,10 +131,12 @@ export class Todo {
    * @param {HTMLInputElement} checkButton
    * @param {HTMLInputElement} todoTaskLabel
    * @param {HTMLButtonElement} deleteButton
+   * @param {HTMLInputElement} todoDateLabel
    */
-  todoAddEventListeners(checkButton, todoTaskLabel, deleteButton) {
+  todoAddEventListeners(checkButton, todoTaskLabel, deleteButton ,todoDateLabel) {
     checkButton.addEventListener('click', this.toggleCompletedTodo);
     deleteButton.addEventListener('click', this.deleteTodo);
     todoTaskLabel.addEventListener('change', this.updateTodo);
+    todoDateLabel.addEventListener('change', this.updateTodo);
   }
 }

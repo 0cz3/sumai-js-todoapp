@@ -90,6 +90,17 @@
     }
   }
 
+  &__dateLabel {
+    border: none;
+    padding: 6px;
+    &:focus-visible {
+      outline: 0.5px solid;
+    }
+    &:hover {
+      outline: rgb(221, 221, 221) 0.5px solid;
+    }
+  }
+
   &__delete {
     background: url(/img/trash.svg) no-repeat;
     background-size: contain;

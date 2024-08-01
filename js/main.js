@@ -6,6 +6,7 @@ const submitButton = document.querySelector('.js_addTodo_submit');
 const todoTaskList = document.querySelector('.js_todoTask_list');
 const inputForm = document.querySelector('.js_addTodo_form');
 const inputField = document.querySelector('.js_addTodo_input');
+const inputDate = document.querySelector('.js_addTodo_inputDate');
 const toggleButton = document.querySelector('.js_todoTask_toggle');
 
 const setTodoTasks = () => {
@@ -13,6 +14,7 @@ const setTodoTasks = () => {
     const newTodo = new Todo({
       todoTaskList,
       inputValue: todoTask.inputValue,
+      inputDate: todoTask.inputDate,
       counter: '.js_todoTask_count',
       id: todoTask.id,
       completed: todoTask.completed,
@@ -29,11 +31,13 @@ const newTodoTasks = () => {
   const newTodo = new Todo({
     todoTaskList: todoTaskList,
     inputValue: inputField.value,
+    inputDate: inputDate.value,
     counter: '.js_todoTask_count',
     completed: false,
   });
   newTodo.addTodo();
   inputField.value = '';
+  inputDate.value = '';
   toggleSubmitActive(inputField.value, submitButton);
 };
 

@@ -8,7 +8,9 @@ const inputForm = document.querySelector('.js_addTodo_form');
 const inputField = document.querySelector('.js_addTodo_input');
 const inputDate = document.querySelector('.js_addTodo_inputDate');
 const toggleButton = document.querySelector('.js_todoTask_toggle');
-
+/**
+ * ストレージからタスクの情報を呼び出して反映
+ */
 const setTodoTasks = () => {
   getStorageTodoTasks().map((todoTask) => {
     const newTodo = new Todo({
@@ -23,7 +25,6 @@ const setTodoTasks = () => {
     newTodo.updateCount();
   });
 };
-
 /**
  * Todoインスタンス生成、入力欄の初期化
  */
@@ -40,7 +41,6 @@ const newTodoTasks = () => {
   inputDate.value = '';
   toggleSubmitActive(inputField.value, submitButton);
 };
-
 /**
  * 入力欄の変更・送信時のイベントリスナーを追加
  */

@@ -66,7 +66,7 @@ export class Todo {
     todoTaskItem.appendChild(deleteButton);
     this.todoTaskList.appendChild(todoTaskItem);
 
-    this.todoAddEventListeners(checkButton, todoTaskLabel, deleteButton, todoDateLabel);
+    this.todoAddEventListeners(checkButton, todoTaskLabel, todoDateLabel, deleteButton);
   }
   /**
    * todoの完了状態の切り替え

@@ -71,7 +71,6 @@ export class Todo {
   /**
    * todoの完了状態の切り替え
    * @param {Event} e
-   * @return {void}
    */
   toggleCompletedTodo = (e) => {
     //何だかネストが深い
@@ -101,7 +100,6 @@ export class Todo {
   /**
    * todoのタスク内容を更新
    * @param {Event} e
-   * @return {void}
    */
   updateTodoValue = (e) => {
     Todo.todoTasks.map((todoTask) => {
@@ -128,10 +126,10 @@ export class Todo {
   };
   /**
    * todoの状態変化ごとに処理を呼び出し
-   * @param {HTMLInputElement} checkButton
-   * @param {HTMLInputElement} todoTaskLabel
-   * @param {HTMLInputElement} todoDateLabel
-   * @param {HTMLButtonElement} deleteButton
+   * @param {HTMLElement} checkButton
+   * @param {HTMLElement} todoTaskLabel
+   * @param {HTMLElement} todoDateLabel
+   * @param {HTMLElement} deleteButton
    */
   todoAddEventListeners(checkButton, todoTaskLabel, todoDateLabel, deleteButton) {
     checkButton.addEventListener('click', this.toggleCompletedTodo);

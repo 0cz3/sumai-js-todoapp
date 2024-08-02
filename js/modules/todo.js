@@ -102,27 +102,31 @@ export class Todo {
    * @param {Event} e
    */
   updateTodoValue = (e) => {
-    Todo.todoTasks.map((todoTask) => {
-      if (todoTask.id === this.id) {
-        if (/^\S/.test(e.currentTarget.value)) {
-          todoTask.inputValue = escapeChars(e.currentTarget.value);
-          setStorageTodoTasks(Todo.todoTasks);
-        }
-        currentTarget.value = unescapeChars(todoTask.inputValue);
+    /**
+     * イベントが起きたtodoインスタンスと同一idのローカルストレージのtodo
+     */
+    const targetTask = Todo.todoTasks.find((todoTask) => todoTask.id === this.id);
+    if (targetTask) {
+      if (/^\S/.test(e.currentTarget.value)) {
+        targetTask.inputValue = escapeChars(e.currentTarget.value);
+        setStorageTodoTasks(Todo.todoTasks);
       }
-    });
+      e.currentTarget.value = unescapeChars(targetTask.inputValue);
+    }
   };
   /**
    * todoの期日を更新
    * @param {Event} e
    */
   updateTodoDate = (e) => {
-    Todo.todoTasks.map((todoTask) => {
-      if (todoTask.id === this.id) {
-        todoTask.inputDate = e.currentTarget.value;
-        setStorageTodoTasks(Todo.todoTasks);
-      }
-    });
+    /**
+     * イベントが起きたtodoインスタンスと同一idのローカルストレージのtodo
+     */
+    const targetTask = Todo.todoTasks.find((todoTask) => todoTask.id === this.id);
+    if (targetTask) {
+      targetTask.inputDate = e.currentTarget.value;
+      setStorageTodoTasks(Todo.todoTasks);
+    }
   };
   /**
    * todoの状態変化ごとに処理を呼び出し

@@ -8,13 +8,8 @@ import { IS_CLOSED } from '../constants.js';
  */
 const dropdown = (toggleButton, todoTaskList) => {
   toggleButton.addEventListener('click', ({currentTarget}) => {
-    if (currentTarget.classList.contains(IS_CLOSED)) {
-      currentTarget.classList.remove(IS_CLOSED);
-      todoTaskList.classList.remove(IS_CLOSED);
-      return;
-    }
-    currentTarget.classList.add(IS_CLOSED);
-    todoTaskList.classList.add(IS_CLOSED);
+    currentTarget.classList.toggle(IS_CLOSED);
+    todoTaskList.classList.toggle(IS_CLOSED);
   });
 };
 

@@ -73,7 +73,6 @@ export class Todo {
    * @param {Event} e
    * @return {void}
    */
-  //メソッドにアロー関数使ってしまっている、bind使った方がいいのかも
   toggleCompletedTodo = ({ currentTarget }) => {
     //何だかネストが深い
     Todo.todoTasks.map((todoTask) => {
@@ -100,33 +99,39 @@ export class Todo {
     this.updateCount();
   };
   /**
+   * タスク内容を更新
+   * @param {Event} e
+   * @return {void}
+   */
+  updateTodoValue = ({ currentTarget }) => {
+    Todo.todoTasks.map((todoTask) => {
+      if (todoTask.id === this.id) {
+        if (/^\S/.test(currentTarget.value)) {
+          todoTask.inputValue = escapeChars(currentTarget.value);
+          setStorageTodoTasks(Todo.todoTasks);
+        }
+        currentTarget.value = unescapeChars(todoTask.inputValue);
+      }
+    });
+  };
+  /**
+   * 期日を更新
+   * @param {Event} e
+   * @return {void}
+   */
+  updateTodoDate = ({ currentTarget }) => {
+    Todo.todoTasks.map((todoTask) => {
+      if (todoTask.id === this.id) {
+        todoTask.inputDate = currentTarget.value;
+        setStorageTodoTasks(Todo.todoTasks);
+      }
+    });
+  };
+  /**
    * todoの入力内容を更新
    * @param {Event} e
    * @return {void}
    */
-  updateTodo = ({ currentTarget }) => {
-    const isDate = currentTarget.type === 'date';
-    const updateDate = (todoTask) => {
-      todoTask.inputDate = currentTarget.value;
-      setStorageTodoTasks(Todo.todoTasks);
-    };
-    const updateValue = (todoTask) => {
-      if (/^\S/.test(currentTarget.value)) {
-        todoTask.inputValue = escapeChars(currentTarget.value);
-        setStorageTodoTasks(Todo.todoTasks);
-      }
-      currentTarget.value = unescapeChars(todoTask.inputValue);
-    };
-    Todo.todoTasks.map((todoTask) => {
-      if (todoTask.id === this.id) {
-        if (isDate) {
-          updateDate(todoTask);
-          return;
-        }
-        updateValue(todoTask);
-      }
-    });
-  };
   /**
    * todoタスクの状態変化時のイベントリスナーを追加
    * @param {HTMLInputElement} checkButton
@@ -137,8 +142,8 @@ export class Todo {
   //onChangeでイベント分岐させた方が見やすいかも
   todoAddEventListeners(checkButton, todoTaskLabel, todoDateLabel, deleteButton) {
     checkButton.addEventListener('click', this.toggleCompletedTodo);
-    todoTaskLabel.addEventListener('change', this.updateTodo);
-    todoDateLabel.addEventListener('change', this.updateTodo);
+    todoTaskLabel.addEventListener('change', this.updateTodoValue);
+    todoDateLabel.addEventListener('change', this.updateTodoDate);
     deleteButton.addEventListener('click', this.deleteTodo);
   }
 }

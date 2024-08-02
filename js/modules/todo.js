@@ -73,16 +73,16 @@ export class Todo {
    * @param {Event} e
    * @return {void}
    */
-  toggleCompletedTodo = ({ currentTarget }) => {
+  toggleCompletedTodo = (e) => {
     //何だかネストが深い
     Todo.todoTasks.map((todoTask) => {
       if (todoTask.id === this.id) {
         todoTask.completed = !todoTask.completed;
         if (todoTask.completed) {
-          currentTarget.classList.add('checked');
+          e.currentTarget.classList.add('checked');
           return;
         }
-        currentTarget.classList.remove('checked');
+        e.currentTarget.classList.remove('checked');
       }
     });
     setStorageTodoTasks(Todo.todoTasks);
@@ -92,8 +92,8 @@ export class Todo {
    * todoを削除
    * @param {Event} e
    */
-  deleteTodo = ({ currentTarget }) => {
-    currentTarget.closest('.js_todoTask_item').remove();
+  deleteTodo = (e) => {
+    e.currentTarget.closest('.js_todoTask_item').remove();
     Todo.todoTasks = Todo.todoTasks.filter((todoTask) => todoTask.id !== this.id);
     setStorageTodoTasks(Todo.todoTasks);
     this.updateCount();
@@ -103,11 +103,11 @@ export class Todo {
    * @param {Event} e
    * @return {void}
    */
-  updateTodoValue = ({ currentTarget }) => {
+  updateTodoValue = (e) => {
     Todo.todoTasks.map((todoTask) => {
       if (todoTask.id === this.id) {
-        if (/^\S/.test(currentTarget.value)) {
-          todoTask.inputValue = escapeChars(currentTarget.value);
+        if (/^\S/.test(e.currentTarget.value)) {
+          todoTask.inputValue = escapeChars(e.currentTarget.value);
           setStorageTodoTasks(Todo.todoTasks);
         }
         currentTarget.value = unescapeChars(todoTask.inputValue);
@@ -117,12 +117,11 @@ export class Todo {
   /**
    * todoの期日を更新
    * @param {Event} e
-   * @return {void}
    */
-  updateTodoDate = ({ currentTarget }) => {
+  updateTodoDate = (e) => {
     Todo.todoTasks.map((todoTask) => {
       if (todoTask.id === this.id) {
-        todoTask.inputDate = currentTarget.value;
+        todoTask.inputDate = e.currentTarget.value;
         setStorageTodoTasks(Todo.todoTasks);
       }
     });

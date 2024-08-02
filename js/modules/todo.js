@@ -99,7 +99,7 @@ export class Todo {
     this.updateCount();
   };
   /**
-   * タスク内容を更新
+   * todoのタスク内容を更新
    * @param {Event} e
    * @return {void}
    */
@@ -115,7 +115,7 @@ export class Todo {
     });
   };
   /**
-   * 期日を更新
+   * todoの期日を更新
    * @param {Event} e
    * @return {void}
    */
@@ -128,18 +128,12 @@ export class Todo {
     });
   };
   /**
-   * todoの入力内容を更新
-   * @param {Event} e
-   * @return {void}
-   */
-  /**
-   * todoタスクの状態変化時のイベントリスナーを追加
+   * todoの状態変化ごとに処理を呼び出し
    * @param {HTMLInputElement} checkButton
    * @param {HTMLInputElement} todoTaskLabel
    * @param {HTMLInputElement} todoDateLabel
    * @param {HTMLButtonElement} deleteButton
    */
-  //onChangeでイベント分岐させた方が見やすいかも
   todoAddEventListeners(checkButton, todoTaskLabel, todoDateLabel, deleteButton) {
     checkButton.addEventListener('click', this.toggleCompletedTodo);
     todoTaskLabel.addEventListener('change', this.updateTodoValue);

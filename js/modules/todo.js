@@ -73,17 +73,15 @@ export class Todo {
    * @param {Event} e
    */
   toggleCompletedTodo = (e) => {
-    //何だかネストが深い
-    Todo.todoTasks.map((todoTask) => {
-      if (todoTask.id === this.id) {
-        todoTask.completed = !todoTask.completed;
-        if (todoTask.completed) {
-          e.currentTarget.classList.add('checked');
-          return;
-        }
-        e.currentTarget.classList.remove('checked');
-      }
-    });
+    /**
+     * イベントが起きたtodoインスタンスと同一idのローカルストレージのtodo
+     */
+    const targetTask = Todo.todoTasks.find((todoTask) => todoTask.id === this.id);
+    if(targetTask){
+      //完了状態とクラス名checkedを切り替え
+      targetTask.completed = !targetTask.completed;
+      e.currentTarget.classList.toggle('checked');
+    }
     setStorageTodoTasks(Todo.todoTasks);
     this.updateCount();
   };

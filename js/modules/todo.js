@@ -106,7 +106,7 @@ export class Todo {
     todoTaskItem.appendChild(todoTaskLabel);
     todoTaskItem.appendChild(todoDateLabel);
     todoTaskItem.appendChild(deleteButton);
-    this.todoTaskList.appendChild(todoTaskItem);
+    this.todoTaskList.prepend(todoTaskItem);
 
     this.todoAddEventListeners(checkButton, todoTaskLabel, todoDateLabel, deleteButton);
   }

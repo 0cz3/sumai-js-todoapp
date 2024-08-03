@@ -14,7 +14,7 @@ export const setStorageTodoTasks = (items) => {
 export const getStorageTodoTasks = () => {
   /**
    * ローカルストレージの保存内容
-   * @type {string || null} JSON化されたTodoオブジェクト || null
+   * @type {string || null} JSON化されたTodo[] || null
    */
   const items = localStorage.getItem(STORAGE_TODO_TASKS);
   return JSON.parse(items) || [];

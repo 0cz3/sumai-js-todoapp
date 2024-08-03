@@ -29,15 +29,28 @@ const submitButton = document.querySelector('.js_addTodo_submit');
 const todoTaskList = document.querySelector('.js_todoTask_list');
 /**
  * todoTaskListの表示切り替えをボタン
- * @type {HTMLUListElement | null}
+ * @type {HTMLButtonElement | null}
  */
 const toggleButton = document.querySelector('.js_todoTask_toggle');
 /**
+ * 入力欄を初期化
+ * @function
+ */
+const resetInputs = () => {
+  inputField.value = '';
+  inputDate.value = '';
+};
+/**
  * ストレージからタスクの情報を呼び出して反映
+ * @function
  */
 const setTodoTasks = () => {
   getStorageTodoTasks().map((todoTask) => {
-    const newTodo = new Todo({
+    /**
+     * Todoインスタンス生成
+     * @type {Todo}
+     */
+    const setTodo = new Todo({
       todoTaskList,
       inputValue: todoTask.inputValue,
       inputDate: todoTask.inputDate,
@@ -45,14 +58,19 @@ const setTodoTasks = () => {
       id: todoTask.id,
       completed: todoTask.completed,
     });
-    newTodo.createTodoElements();
-    newTodo.updateCount();
+    setTodo.createTodoElements();
+    setTodo.updateCount();
   });
 };
 /**
- * Todoインスタンス生成、入力欄の初期化
+ * Todoインスタンス生成時の一連の処理
+ * @function
  */
 const newTodoTasks = () => {
+  /**
+   * Todoインスタンス生成
+   * @type {Todo}
+   */
   const newTodo = new Todo({
     todoTaskList: todoTaskList,
     inputValue: inputField.value,
@@ -61,22 +79,19 @@ const newTodoTasks = () => {
     completed: false,
   });
   newTodo.addTodo();
-  inputField.value = '';
-  inputDate.value = '';
+  resetInputs();
   toggleSubmitActive(inputField.value, submitButton);
 };
+
 /**
  * 入力欄の変更・送信時のイベントリスナーを追加
+ * @function
  */
 const submitAddEventListener = () => {
-  inputField.addEventListener('input', () => {
-    toggleSubmitActive(inputField.value, submitButton);
-  });
-  submitButton.addEventListener('click', () => {
-    newTodoTasks();
-  });
-  inputForm.addEventListener('submit', (e) => {
-    e.preventDefault();
+  inputField.addEventListener('input', () => toggleSubmitActive(inputField.value, submitButton));
+  submitButton.addEventListener('click', () => newTodoTasks());
+  // inputFormでenterキーを押したとき
+  inputForm.addEventListener('submit', () => {
     if (/^\S/.test(inputField.value)) {
       newTodoTasks();
     }
@@ -84,6 +99,7 @@ const submitAddEventListener = () => {
 };
 /**
  * window読み込み時の処理を実行
+ * @function
  */
 const init = () => {
   setTodoTasks();

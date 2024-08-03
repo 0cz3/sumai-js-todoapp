@@ -1,10 +1,10 @@
 /**
- * エスケープ処理を実行
- * @param {string} str
- * @return {string}
+ * エスケープ処理
+ * @param {string} string
+ * @return {string} エスケープしたstring
  */
-export const escapeChars = (str) => {
-  return String(str)
+export const escapeChars = (string) => {
+  return String(string)
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
@@ -12,12 +12,12 @@ export const escapeChars = (str) => {
     .replace(/'/g, '&#039;');
 };
 /**
- * 非エスケープ処理を実行
- * @param {string} str
- * @return {string}
+ * 非エスケープ処理
+ * @param {string} string
+ * @return {string} 非エスケープしたstring
  */
-export const unescapeChars = (str) => {
-  return String(str)
+export const unescapeChars = (string) => {
+  return String(string)
     .replace(/&amp;/g, '&')
     .replace(/&lt;/g, '<')
     .replace(/&gt;/g, '>')

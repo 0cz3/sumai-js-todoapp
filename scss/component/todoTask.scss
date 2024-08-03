@@ -56,6 +56,21 @@
     }
   }
 
+  &__selectWrapper {
+    margin-left: auto;
+  }
+
+  &__selectText {
+    font-size: 0.9em;
+    margin-left: 12px;
+  }
+
+  &__select {
+    font-size: 0.9em;
+    padding: 2px;
+    min-width: 80px;
+  }
+
   &__check {
     background: url(/img/circle.svg) no-repeat;
     background-size: contain;
@@ -73,6 +88,18 @@
     border: none;
     padding: 6px;
     flex-grow: 1;
+    &:focus-visible {
+      outline: 0.5px solid;
+    }
+    &:hover {
+      outline: rgb(221, 221, 221) 0.5px solid;
+    }
+  }
+
+  &__dateLabel {
+    border: none;
+    padding: 6px;
+    cursor: pointer;
     &:focus-visible {
       outline: 0.5px solid;
     }

@@ -2,7 +2,7 @@ import { escapeChars, unescapeChars } from './textUtility.js';
 import { getStorageTodoTasks, setStorageTodoTasks } from './localStorage.js';
 
 export class Todo {
-  static todoTasks = getStorageTodoTasks();
+  static storageTodoTasks = getStorageTodoTasks();
   /**
    * @constructor
    * @param {Object} obj
@@ -19,7 +19,7 @@ export class Todo {
    * カウンターの値を未完了のtodo数に更新
    */
   updateCount() {
-    const incompleteTasks = Todo.todoTasks.filter((todoTask) => !todoTask.completed);
+    const incompleteTasks = Todo.storageTodoTasks.filter((todoTask) => !todoTask.completed);
     const incompleteCount = incompleteTasks.length;
     this.counter.innerHTML = incompleteCount;
   }
@@ -27,9 +27,9 @@ export class Todo {
    * todoを追加
    */
   addTodo() {
-    Todo.todoTasks = [...Todo.todoTasks, this];
+    Todo.storageTodoTasks = [...Todo.storageTodoTasks, this];
     this.createTodoElements();
-    setStorageTodoTasks(Todo.todoTasks);
+    setStorageTodoTasks(Todo.storageTodoTasks);
     this.updateCount();
   }
   /**
@@ -76,13 +76,13 @@ export class Todo {
     /**
      * イベントが起きたtodoインスタンスと同一idのローカルストレージのtodo
      */
-    const targetTask = Todo.todoTasks.find((todoTask) => todoTask.id === this.id);
+    const targetTask = Todo.storageTodoTasks.find((todoTask) => todoTask.id === this.id);
     if(targetTask){
       //完了状態とクラス名checkedを切り替え
       targetTask.completed = !targetTask.completed;
       e.currentTarget.classList.toggle('checked');
     }
-    setStorageTodoTasks(Todo.todoTasks);
+    setStorageTodoTasks(Todo.storageTodoTasks);
     this.updateCount();
   };
   /**
@@ -91,8 +91,8 @@ export class Todo {
    */
   deleteTodo = (e) => {
     e.currentTarget.closest('.js_todoTask_item').remove();
-    Todo.todoTasks = Todo.todoTasks.filter((todoTask) => todoTask.id !== this.id);
-    setStorageTodoTasks(Todo.todoTasks);
+    Todo.storageTodoTasks = Todo.storageTodoTasks.filter((todoTask) => todoTask.id !== this.id);
+    setStorageTodoTasks(Todo.storageTodoTasks);
     this.updateCount();
   };
   /**
@@ -103,11 +103,11 @@ export class Todo {
     /**
      * イベントが起きたtodoインスタンスと同一idのローカルストレージのtodo
      */
-    const targetTask = Todo.todoTasks.find((todoTask) => todoTask.id === this.id);
+    const targetTask = Todo.storageTodoTasks.find((todoTask) => todoTask.id === this.id);
     if (targetTask) {
       if (/^\S/.test(e.currentTarget.value)) {
         targetTask.inputValue = escapeChars(e.currentTarget.value);
-        setStorageTodoTasks(Todo.todoTasks);
+        setStorageTodoTasks(Todo.storageTodoTasks);
       }
       e.currentTarget.value = unescapeChars(targetTask.inputValue);
     }
@@ -120,10 +120,10 @@ export class Todo {
     /**
      * イベントが起きたtodoインスタンスと同一idのローカルストレージのtodo
      */
-    const targetTask = Todo.todoTasks.find((todoTask) => todoTask.id === this.id);
+    const targetTask = Todo.storageTodoTasks.find((todoTask) => todoTask.id === this.id);
     if (targetTask) {
       targetTask.inputDate = e.currentTarget.value;
-      setStorageTodoTasks(Todo.todoTasks);
+      setStorageTodoTasks(Todo.storageTodoTasks);
     }
   };
   /**

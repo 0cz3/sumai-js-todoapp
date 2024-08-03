@@ -11,7 +11,7 @@
     <div class="todo">
       <form class="addTodo js_addTodo_form">
         <input type="text" class="addTodo__input js_addTodo_input" placeholder="タスクを入力して追加" />
-        <label for="inputDate" class="addTodo__dateText">期限:</label>
+        <label for="inputDate" class="addTodo__dateText">期限日</label>
         <input type="date" id="inputDate" class="addTodo__inputDate js_addTodo_inputDate" placeholder="タスクを入力して追加" />
         <input type="submit" class="addTodo__submit js_addTodo_submit" value="追加" />
       </form>
@@ -21,10 +21,18 @@
           <p class="todoTask__title">Todoリスト</p>
           <span class="todoTask__count js_todoTask_count">0</span>
           <div class="todoTask__selectWrapper">
+            <span class="todoTask__selectText">絞り込み</span>
             <select class="todoTask__select js_todoTask_filter" name="" id="">
               <option value="all">すべて</option>
               <option value="complete">完了</option>
               <option value="incomplete">未完了</option>
+            </select>
+            <span class="todoTask__selectText">並び替え</span>
+            <select class="todoTask__select js_todoTask_sort" name="" id="">
+              <option value="addedDate">追加日</option>
+              <option value="addedDate_reverse">追加日(逆)</option>
+              <option value="dueDate">期限日</option>
+              <option value="dueDate_reverse">期限日(逆)</option>
             </select>
           </div>
         </div>

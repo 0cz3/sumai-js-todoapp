@@ -60,9 +60,15 @@
     margin-left: auto;
   }
 
+  &__selectText {
+    font-size: 0.9em;
+    margin-left: 12px;
+  }
+
   &__select {
+    font-size: 0.9em;
     padding: 2px;
-    text-align: center;
+    min-width: 80px;
   }
 
   &__check {

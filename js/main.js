@@ -1,110 +1,95 @@
-import { Todo } from './modules/todo.js';
-import { getStorageTodoTasks } from './modules/localStorage.js';
-import toggleSubmitActive from './modules/toggleSubmitActive.js';
-import dropdown from './modules/dropdown.js';
+import * as todoData from './todoData.js';
+import RenderTodoView from './todoView/renderTodoView.js';
+import InputTodoView from './todoView/inputTodoView.js';
+import countTodoView from './todoView/countTodoView.js';
+
 /**
- * TODOタスク入力フォーム
- * @type {HTMLFormElement | null}
- */
-const inputForm = document.querySelector('.js_addTodo_form');
-/**
- * inputFormのTODOタスク名入力欄
- * @type {HTMLInputElement | null}
- */
-const inputField = document.querySelector('.js_addTodo_input');
-/**
- * inputFormのTODOタスク期限入力欄
- * @type {HTMLInputElement | null}
- */
-const inputDate = document.querySelector('.js_addTodo_inputDate');
-/**
- * inputFormの送信ボタン
- * @type {HTMLInputElement | null}
- */
-const submitButton = document.querySelector('.js_addTodo_submit');
-/**
- * 追加されたTODOタスクをまとめたulリスト
- * @type {HTMLUListElement | null}
- */
-const todoTaskList = document.querySelector('.js_todoTask_list');
-/**
- * todoTaskListの表示切り替えをボタン
- * @type {HTMLButtonElement | null}
- */
-const toggleButton = document.querySelector('.js_todoTask_toggle');
-/**
- * 入力欄を初期化
+ * TODOタスク入力処理
  * @function
  */
-const resetInputs = () => {
-  inputField.value = '';
-  inputDate.value = '';
-};
-/**
- * ストレージからタスクの情報を呼び出して反映
- * @function
- */
-const setTodoTasks = () => {
-  getStorageTodoTasks().map((todoTask) => {
-    /**
-     * Todoインスタンス生成
-     * @type {Todo}
-     */
-    const setTodo = new Todo({
-      todoTaskList,
-      inputValue: todoTask.inputValue,
-      inputDate: todoTask.inputDate,
-      counter: '.js_todoTask_count',
-      id: todoTask.id,
-      completed: todoTask.completed,
-    });
-    setTodo.createTodoElements();
-    setTodo.updateCount();
-  });
-};
-/**
- * Todoインスタンス生成時の一連の処理
- * @function
- */
-const newTodoTasks = () => {
-  /**
-   * Todoインスタンス生成
-   * @type {Todo}
-   */
-  const newTodo = new Todo({
-    todoTaskList: todoTaskList,
-    inputValue: inputField.value,
-    inputDate: inputDate.value,
-    counter: '.js_todoTask_count',
-    completed: false,
-  });
-  newTodo.addTodo();
-  resetInputs();
-  toggleSubmitActive(inputField.value, submitButton);
+const controlInputTodo = () => {
+  const todoInputs = InputTodoView.getInput();
+  todoData.addTodoData(...todoInputs);
+  createTodoView(todoData.state.todoTask);
 };
 
 /**
- * 入力欄の変更・送信時のイベントリスナーを追加
+ * TODOタスク数反映
  * @function
  */
-const submitAddEventListener = () => {
-  inputField.addEventListener('input', () => toggleSubmitActive(inputField.value, submitButton));
-  submitButton.addEventListener('click', () => newTodoTasks());
-  // inputFormでenterキーを押したとき
-  inputForm.addEventListener('submit', () => {
-    if (/^\S/.test(inputField.value)) {
-      newTodoTasks();
-    }
-  });
+const controlCount = () => {
+  countTodoView.updateCount(todoData.state.todoTasks.length);
 };
+
 /**
- * window読み込み時の処理を実行
+ * TODOタスクの完了状態変更
+ * @function
+ * @param {RenderTodoView} newTodo
+ */
+const controlCompleted = (newTodo) => {
+  const id = newTodo.toggleCompletedTodo();
+  todoData.toggleCompletedData(id);
+};
+
+/**
+ * TODOタスク名変更
+ * @function
+ * @param {RenderTodoView} newTodo
+ */
+const controlTaskName = (newTodo) => {
+  const todoInputs = newTodo.updateTodoName();
+  todoData.updateNameData(...todoInputs);
+};
+
+/**
+ * TODOタスクの締切日変更
+ * @function
+ * @param {RenderTodoView} newTodo
+ */
+const controlDueDate = (newTodo) => {
+  const todoInputs = newTodo.updateTodoDate();
+  todoData.updateDateData(...todoInputs);
+};
+
+/**
+ * TODOタスク削除
+ * @function
+ * @param {RenderTodoView} newTodo
+ */
+const controlDelete = (newTodo) => {
+  const id = newTodo.deleteTodo();
+  todoData.deleteTodoData(id);
+  controlCount();
+};
+
+/**
+ * TODOタスクのデータからインスタンス生成
+ * @param {todoTask} todoTask
+ */
+const createTodoView = (todoTask) => {
+  /**
+   * RenderTodoViewのインスタンス
+   * @type {RenderTodoView}
+   */
+  const newTodo = new RenderTodoView(todoTask);
+  controlCount();
+  newTodo.addEventListenerCheck(controlCompleted);
+  newTodo.addEventListenerLabel(controlTaskName);
+  newTodo.addEventListenerDate(controlDueDate);
+  newTodo.addEventListenerDelete(controlDelete);
+};
+
+/**
+ * window読み込み時の処理
  * @function
  */
 const init = () => {
-  setTodoTasks();
-  dropdown(toggleButton, todoTaskList);
-  submitAddEventListener();
+  todoData.getStorageTodoTasks();
+  todoData.state.todoTasks.forEach((todoTask) => {
+    createTodoView(todoTask);
+  });
+  controlCount();
+  InputTodoView.addEventListenerInput(controlInputTodo);
 };
 
 init();

@@ -70,6 +70,7 @@ export default class RenderTodoView {
      * @type {name}
      */
     const name = this.#todoTaskLabel.value;
+    this.#todoTaskLabel.setAttribute('value',name);
     return [this.#todoTask.id, name];
   }
 
@@ -82,6 +83,7 @@ export default class RenderTodoView {
      * @type {date}
      */
     const date = this.#todoDateLabel.value;
+    this.#todoDateLabel.setAttribute('value',date);
     return [this.#todoTask.id, date];
   }
 

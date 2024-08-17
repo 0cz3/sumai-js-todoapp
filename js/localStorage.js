@@ -6,7 +6,11 @@ import { STORAGE_TODO_TASKS } from './constants.js';
  * @param {todoTask[]} items - TODOタスクが格納された配列
  */
 export const setStorageTodoTasks = (items) => {
-  localStorage.setItem(STORAGE_TODO_TASKS, JSON.stringify(items));
+  try {
+    localStorage.setItem(STORAGE_TODO_TASKS, JSON.stringify(items));
+  } catch {
+    window.alert(`データの保存に失敗しました...`);
+  }
 };
 
 /**

@@ -16,8 +16,11 @@ const todoTaskList = document.querySelector('.js_todoTask_list');
  * @param {Event} e
  */
 export const dropdown = (e) => {
-  e.currentTarget.classList.toggle(IS_CLOSED);
-  todoTaskList.classList.toggle(IS_CLOSED);
+  /**
+   * @type {boolean} IS_CLOSEDを追加した場合true
+   */
+  const isTargetClosed = e.currentTarget.classList.toggle(IS_CLOSED);
+  todoTaskList.classList.toggle(IS_CLOSED, isTargetClosed);
 };
 
 /**

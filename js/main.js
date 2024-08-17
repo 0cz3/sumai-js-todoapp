@@ -2,6 +2,7 @@ import * as todoData from './todoData.js';
 import RenderTodoView from './todoView/renderTodoView.js';
 import InputTodoView from './todoView/inputTodoView.js';
 import countTodoView from './todoView/countTodoView.js';
+import * as dropdown from './modules/dropdown.js';
 
 /**
  * TODOタスク送信許可判定
@@ -93,6 +94,15 @@ const createTodoView = (todoTask) => {
 };
 
 /**
+ * ドロップダウンでの表示非表示切り替え
+ * @function
+ * @param {Event} e
+ */
+const controlDropdown = (e) => {
+  dropdown.dropdown(e);
+};
+
+/**
  * window読み込み時の処理
  * @function
  */
@@ -104,6 +114,7 @@ const init = () => {
   controlCount();
   InputTodoView.addEventListenerInput(controlInputTodo);
   InputTodoView.addEventListenerSubmit(controlSubmitTodo);
+  dropdown.addEventListenerToggle(controlDropdown);
 };
 
 init();

@@ -1,15 +1,32 @@
 import { IS_CLOSED } from '../constants.js';
 /**
- * toggleButtonクリックでtoggleButtonの状態とtodoTaskListの表示非表示切り替え
- * @function
- * @param {Element|null} toggleButton
- * @param {Element|null} todoTaskList
+ * todoTaskListの表示切り替えをボタン
+ * @type {HTMLButtonElement | null}
  */
-const dropdown = (toggleButton, todoTaskList) => {
-  toggleButton.addEventListener('click', (e) => {
-    e.currentTarget.classList.toggle(IS_CLOSED);
-    todoTaskList.classList.toggle(IS_CLOSED);
-  });
+const toggleButton = document.querySelector('.js_todoTask_toggle');
+/**
+ * 追加されたTODOタスクをまとめたulリスト
+ * @type {HTMLUListElement | null}
+ */
+const todoTaskList = document.querySelector('.js_todoTask_list');
+
+/**
+ * toggleButtonの状態とtodoTaskListの表示非表示切り替え
+ * @function
+ * @param {Event} e
+ */
+export const dropdown = (e) => {
+  e.currentTarget.classList.toggle(IS_CLOSED);
+  todoTaskList.classList.toggle(IS_CLOSED);
 };
 
-export default dropdown;
+/**
+ * toggleButtonがクリックされたらhandler実行
+ * @function
+ * @param {handler} handler
+ */
+export const addEventListenerToggle = (handler) => {
+  toggleButton.addEventListener('click', (e) => {
+    handler(e);
+  });
+};

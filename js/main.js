@@ -1,3 +1,4 @@
+import * as localStorage from './localStorage.js';
 import * as todoData from './todoData.js';
 import RenderTodoView from './todoView/renderTodoView.js';
 import InputTodoView from './todoView/inputTodoView.js';
@@ -20,6 +21,7 @@ const controlSubmitTodo = () => {
   const todoInputs = InputTodoView.getInput();
   controlInputTodo();
   todoData.addTodoData(...todoInputs);
+  localStorage.setStorageTodoTasks(todoData.state.todoTasks);
   createTodoView(todoData.state.todoTask);
 };
 
@@ -39,6 +41,7 @@ const controlCount = () => {
 const controlCompleted = (newTodo) => {
   const id = newTodo.toggleCompletedTodo();
   todoData.toggleCompletedData(id);
+  localStorage.setStorageTodoTasks(todoData.state.todoTasks);
 };
 
 /**
@@ -50,6 +53,7 @@ const controlTaskName = (newTodo) => {
   if (newTodo.hasText()) {
     const todoInputs = newTodo.updateTodoName();
     todoData.updateNameData(...todoInputs);
+    localStorage.setStorageTodoTasks(todoData.state.todoTasks);
   } else {
     newTodo.denyUpdate();
   }
@@ -63,6 +67,7 @@ const controlTaskName = (newTodo) => {
 const controlDueDate = (newTodo) => {
   const todoInputs = newTodo.updateTodoDate();
   todoData.updateDateData(...todoInputs);
+  localStorage.setStorageTodoTasks(todoData.state.todoTasks);
 };
 
 /**
@@ -73,6 +78,8 @@ const controlDueDate = (newTodo) => {
 const controlDelete = (newTodo) => {
   const id = newTodo.deleteTodo();
   todoData.deleteTodoData(id);
+  localStorage.setStorageTodoTasks(todoData.state.todoTasks);
+
   controlCount();
 };
 
@@ -107,7 +114,7 @@ const controlDropdown = (e) => {
  * @function
  */
 const init = () => {
-  todoData.getStorageTodoTasks();
+  todoData.importData(localStorage.getStorageTodoTasks());
   todoData.state.todoTasks.forEach((todoTask) => {
     createTodoView(todoTask);
   });

@@ -1,4 +1,3 @@
-import { STORAGE_TODO_TASKS } from './constants.js';
 /**
  * TODOタスクの状態
  * @type {{ todoTasks: todoTask[]; todoTask: todoTask; }}
@@ -9,25 +8,12 @@ export const state = {
 };
 
 /**
- * stateのTODOタスクをローカルストレージへ保存
+ * stateへitemsデータ反映
  * @function
- * @param {todoTask[]} items - TODOタスクが格納された配列
+ * @param {todoTask[]} items
  */
-const setStorageTodoTasks = (items) => {
-  localStorage.setItem(STORAGE_TODO_TASKS, JSON.stringify(items));
-};
-
-/**
- * ローカルストレージのTODOタスクをstateへ反映
- * @function
- */
-export const getStorageTodoTasks = () => {
-  /**
-   * ローカルストレージの保存内容
-   * @type {string | null} - TODOタスク
-   */
-  const items = localStorage.getItem(STORAGE_TODO_TASKS);
-  state.todoTasks = JSON.parse(items) || [];
+export const importData = (items) => {
+  state.todoTasks = items;
 };
 
 /**
@@ -44,7 +30,6 @@ export const addTodoData = (name, date) => {
     completed: false,
   };
   state.todoTasks = [...state.todoTasks, state.todoTask];
-  setStorageTodoTasks(state.todoTasks);
 };
 
 /**
@@ -54,10 +39,7 @@ export const addTodoData = (name, date) => {
  */
 export const toggleCompletedData = (id) => {
   const targetTask = state.todoTasks.find((todoTask) => todoTask.id === id);
-  if (targetTask) {
-    targetTask.completed = !targetTask.completed;
-  }
-  setStorageTodoTasks(state.todoTasks);
+  if (targetTask) targetTask.completed = !targetTask.completed;
 };
 
 /**
@@ -68,10 +50,7 @@ export const toggleCompletedData = (id) => {
  */
 export const updateNameData = (id, name) => {
   const targetTask = state.todoTasks.find((todoTask) => todoTask.id === id);
-  if (targetTask) {
-    targetTask.name = name;
-  }
-  setStorageTodoTasks(state.todoTasks);
+  if (targetTask) targetTask.name = name;
 };
 
 /**
@@ -82,10 +61,7 @@ export const updateNameData = (id, name) => {
  */
 export const updateDateData = (id, date) => {
   const targetTask = state.todoTasks.find((todoTask) => todoTask.id === id);
-  if (targetTask) {
-    targetTask.date = date;
-  }
-  setStorageTodoTasks(state.todoTasks);
+  if (targetTask) targetTask.date = date;
 };
 
 /**
@@ -96,5 +72,4 @@ export const updateDateData = (id, date) => {
 export const deleteTodoData = (id) => {
   // 削除対象以外を残す
   state.todoTasks = state.todoTasks.filter((todoTask) => todoTask.id !== id);
-  setStorageTodoTasks(state.todoTasks);
 };

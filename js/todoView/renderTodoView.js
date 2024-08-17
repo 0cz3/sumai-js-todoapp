@@ -1,4 +1,5 @@
-export default class RenderTodoView {
+import todoView from './todoView.js';
+export default class RenderTodoView extends todoView {
   /**
    * TODOタスクの情報
    * @type {todoTask}
@@ -17,7 +18,7 @@ export default class RenderTodoView {
    * TODOタスク名の表示
    * @type {HTMLInputElement | null}
    */
-  #todoTaskLabel;
+  _inputName;
   /**
    * TODOタスク締切日の表示
    * @type {HTMLInputElement | null}
@@ -39,6 +40,7 @@ export default class RenderTodoView {
    * @param {todoTask} todoTask
    */
   constructor(todoTask) {
+    super();
     this.#todoTask = todoTask;
     this.#createTodoView();
   }
@@ -69,9 +71,16 @@ export default class RenderTodoView {
     /**
      * @type {name}
      */
-    const name = this.#todoTaskLabel.value;
-    this.#todoTaskLabel.setAttribute('value',name);
+    const name = this.escapeChars(this._inputName.value);
+    this._inputName.setAttribute('value', name);
     return [this.#todoTask.id, name];
+  }
+
+  /**
+   * 変更前のTODOタスク名を保持
+   */
+  denyUpdate() {
+    this._inputName.value = this.#todoTask.name;
   }
 
   /**
@@ -83,10 +92,9 @@ export default class RenderTodoView {
      * @type {date}
      */
     const date = this.#todoDateLabel.value;
-    this.#todoDateLabel.setAttribute('value',date);
+    this.#todoDateLabel.setAttribute('value', date);
     return [this.#todoTask.id, date];
   }
-
   /**
    * TODOタスク削除
    * @returns {id} 対象TODOタスクのid
@@ -117,7 +125,7 @@ export default class RenderTodoView {
   #selectElements() {
     this.#todoTaskItem = this.#todoTaskList.querySelector('.js_todoTask_item');
     this.#checkButton = this.#todoTaskItem.querySelector('.js_todoTask_check');
-    this.#todoTaskLabel = this.#todoTaskItem.querySelector('.js_todoTask_label');
+    this._inputName = this.#todoTaskItem.querySelector('.js_todoTask_label');
     this.#todoDateLabel = this.#todoTaskItem.querySelector('.js_todoTask_dateLabel');
     this.#deleteButton = this.#todoTaskItem.querySelector('.js_todoTask_delete');
   }
@@ -134,8 +142,7 @@ export default class RenderTodoView {
    * @param {handler} handler
    */
   addEventListenerLabel(handler) {
-    // TODO escape,blank-check
-    this.#todoTaskLabel.addEventListener('change', () => handler(this));
+    this._inputName.addEventListener('change', () => handler(this));
   }
   /**
    * TODOタスクの締切日が変更されたらhandler実行

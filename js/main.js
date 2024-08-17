@@ -4,11 +4,20 @@ import InputTodoView from './todoView/inputTodoView.js';
 import countTodoView from './todoView/countTodoView.js';
 
 /**
- * TODOタスク入力処理
+ * TODOタスク送信許可判定
  * @function
  */
 const controlInputTodo = () => {
+  InputTodoView.hasText() ? InputTodoView.allowSubmit() : InputTodoView.denySubmit();
+};
+
+/**
+ * TODOタスク送信処理
+ * @function
+ */
+const controlSubmitTodo = () => {
   const todoInputs = InputTodoView.getInput();
+  controlInputTodo();
   todoData.addTodoData(...todoInputs);
   createTodoView(todoData.state.todoTask);
 };
@@ -37,8 +46,12 @@ const controlCompleted = (newTodo) => {
  * @param {RenderTodoView} newTodo
  */
 const controlTaskName = (newTodo) => {
-  const todoInputs = newTodo.updateTodoName();
-  todoData.updateNameData(...todoInputs);
+  if (newTodo.hasText()) {
+    const todoInputs = newTodo.updateTodoName();
+    todoData.updateNameData(...todoInputs);
+  } else {
+    newTodo.denyUpdate();
+  }
 };
 
 /**
@@ -90,6 +103,7 @@ const init = () => {
   });
   controlCount();
   InputTodoView.addEventListenerInput(controlInputTodo);
+  InputTodoView.addEventListenerSubmit(controlSubmitTodo);
 };
 
 init();

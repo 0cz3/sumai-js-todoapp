@@ -31,3 +31,8 @@
  * イベント発生時の処理
  * @typedef {function} handler
  */
+
+/**
+ * 入力値が存在するか
+ * @typedef {boolean} hasText
+ */

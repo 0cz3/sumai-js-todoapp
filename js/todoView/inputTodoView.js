@@ -1,6 +1,6 @@
 import { IS_ACTIVE } from '../constants.js';
-import todoView from './todoView.js';
-class InputTodoView extends todoView {
+import TodoView from './todoView.js';
+class InputTodoView extends TodoView {
   /**
    * TODOタスク入力フォーム
    * @type {HTMLFormElement | null}

@@ -1,4 +1,4 @@
-export default class todoView {
+export default class TodoView {
   /**
    * タスク名の入力欄
    * @type {HTMLInputElement | null}

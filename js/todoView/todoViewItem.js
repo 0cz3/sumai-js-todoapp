@@ -1,5 +1,5 @@
-import todoView from './todoView.js';
-export default class RenderTodoView extends todoView {
+import TodoView from './todoView.js';
+export default class TodoViewItem extends TodoView {
   /**
    * TODOタスクの情報
    * @type {todoTask}
@@ -95,6 +95,7 @@ export default class RenderTodoView extends todoView {
     this.#todoDateLabel.setAttribute('value', date);
     return [this.#todoTask.id, date];
   }
+
   /**
    * TODOタスク削除
    * @returns {id} 対象TODOタスクのid
@@ -102,6 +103,13 @@ export default class RenderTodoView extends todoView {
   deleteTodo() {
     this.#todoTaskItem.remove();
     return this.#todoTask.id;
+  }
+
+  /**
+   * TODOタスク表示切り替え
+   */
+  toggleTodoVisible() {
+    console.log(this.#todoTaskItem);
   }
 
   /**

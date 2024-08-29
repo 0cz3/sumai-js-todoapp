@@ -1,6 +1,6 @@
 import * as localStorage from './localStorage.js';
 import * as todoData from './todoData.js';
-import RenderTodoView from './todoView/renderTodoView.js';
+import TodoViewItem from './todoView/todoViewItem.js';
 import InputTodoView from './todoView/inputTodoView.js';
 import countTodoView from './todoView/countTodoView.js';
 import * as dropdown from './modules/dropdown.js';
@@ -36,7 +36,7 @@ const controlCount = () => {
 /**
  * TODOタスクの完了状態変更
  * @function
- * @param {RenderTodoView} newTodo
+ * @param {TodoViewItem} newTodo
  */
 const controlCompleted = (newTodo) => {
   const id = newTodo.toggleCompletedTodo();
@@ -47,7 +47,7 @@ const controlCompleted = (newTodo) => {
 /**
  * TODOタスク名変更
  * @function
- * @param {RenderTodoView} newTodo
+ * @param {TodoViewItem} newTodo
  */
 const controlTaskName = (newTodo) => {
   if (newTodo.hasText()) {
@@ -62,7 +62,7 @@ const controlTaskName = (newTodo) => {
 /**
  * TODOタスクの締切日変更
  * @function
- * @param {RenderTodoView} newTodo
+ * @param {TodoViewItem} newTodo
  */
 const controlDueDate = (newTodo) => {
   const todoInputs = newTodo.updateTodoDate();
@@ -73,7 +73,7 @@ const controlDueDate = (newTodo) => {
 /**
  * TODOタスク削除
  * @function
- * @param {RenderTodoView} newTodo
+ * @param {TodoViewItem} newTodo
  */
 const controlDelete = (newTodo) => {
   const id = newTodo.deleteTodo();
@@ -89,10 +89,10 @@ const controlDelete = (newTodo) => {
  */
 const createTodoView = (todoTask) => {
   /**
-   * RenderTodoViewのインスタンス
-   * @type {RenderTodoView}
+   * TodoViewItemのインスタンス
+   * @type {TodoViewItem}
    */
-  const newTodo = new RenderTodoView(todoTask);
+  const newTodo = new TodoViewItem(todoTask);
   controlCount();
   newTodo.addEventListenerCheck(controlCompleted);
   newTodo.addEventListenerLabel(controlTaskName);

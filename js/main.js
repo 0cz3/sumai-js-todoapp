@@ -2,8 +2,10 @@ import * as localStorage from './localStorage.js';
 import * as todoData from './todoData.js';
 import TodoViewItem from './todoView/todoViewItem.js';
 import InputTodoView from './todoView/inputTodoView.js';
+import RenderTodoView from './todoView/renderTodoView.js';
 import countTodoView from './todoView/countTodoView.js';
 import * as dropdown from './modules/dropdown.js';
+import FilterTodoView from './todoView/filterTodoView.js';
 
 /**
  * TODOタスク送信許可判定
@@ -22,7 +24,7 @@ const controlSubmitTodo = () => {
   controlInputTodo();
   todoData.addTodoData(...todoInputs);
   localStorage.setStorageTodoTasks(todoData.state.todoTasks);
-  createTodoView(todoData.state.todoTask);
+  controlFilter();
 };
 
 /**
@@ -42,6 +44,7 @@ const controlCompleted = (newTodo) => {
   const id = newTodo.toggleCompletedTodo();
   todoData.toggleCompletedData(id);
   localStorage.setStorageTodoTasks(todoData.state.todoTasks);
+  controlFilter();
 };
 
 /**
@@ -93,7 +96,9 @@ const createTodoView = (todoTask) => {
    * @type {TodoViewItem}
    */
   const newTodo = new TodoViewItem(todoTask);
+  RenderTodoView.createTodoView(newTodo.markup());
   controlCount();
+  newTodo.selectElements();
   newTodo.addEventListenerCheck(controlCompleted);
   newTodo.addEventListenerLabel(controlTaskName);
   newTodo.addEventListenerDate(controlDueDate);
@@ -110,6 +115,18 @@ const controlDropdown = (e) => {
 };
 
 /**
+ * 絞り込み処理
+ * @function
+ */
+const controlFilter = () => {
+  todoData.updateFilterData(FilterTodoView.selected());
+  RenderTodoView.clearTodoView();
+  todoData.state.filterTasks.forEach((todoTask) => {
+    createTodoView(todoTask);
+  });
+};
+
+/**
  * window読み込み時の処理
  * @function
  */
@@ -122,6 +139,7 @@ const init = () => {
   InputTodoView.addEventListenerInput(controlInputTodo);
   InputTodoView.addEventListenerSubmit(controlSubmitTodo);
   dropdown.addEventListenerToggle(controlDropdown);
+  FilterTodoView.filterChange(controlFilter);
 };
 
 init();

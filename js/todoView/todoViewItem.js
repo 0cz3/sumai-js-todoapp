@@ -42,16 +42,6 @@ export default class TodoViewItem extends TodoView {
   constructor(todoTask) {
     super();
     this.#todoTask = todoTask;
-    this.#createTodoView();
-  }
-
-  /**
-   * TODOタスクのView作成
-   */
-  #createTodoView() {
-    // todoTaskList内の先頭に追加
-    this.#todoTaskList.insertAdjacentHTML('afterbegin', this.#markup());
-    this.#selectElements();
   }
 
   /**
@@ -116,7 +106,7 @@ export default class TodoViewItem extends TodoView {
    * TODOタスクのマークアップ
    * @returns {string}
    */
-  #markup() {
+  markup() {
     return `
         <li class="todoTask__item js_todoTask_item">
           <button class="todoTask__check js_todoTask_check ${this.#todoTask.completed ? 'checked' : ''}"></button>
@@ -130,7 +120,7 @@ export default class TodoViewItem extends TodoView {
   /**
    * DOM要素を取得
    */
-  #selectElements() {
+  selectElements() {
     this.#todoTaskItem = this.#todoTaskList.querySelector('.js_todoTask_item');
     this.#checkButton = this.#todoTaskItem.querySelector('.js_todoTask_check');
     this._inputName = this.#todoTaskItem.querySelector('.js_todoTask_label');

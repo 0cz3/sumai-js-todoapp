@@ -5,6 +5,7 @@
 export const state = {
   todoTasks: [],
   todoTask: {},
+  filterTasks: {},
 };
 
 /**
@@ -72,4 +73,23 @@ export const updateDateData = (id, date) => {
 export const deleteTodoData = (id) => {
   // 削除対象以外を残す
   state.todoTasks = state.todoTasks.filter((todoTask) => todoTask.id !== id);
+};
+
+/**
+ * 絞り込み状態に応じてfilterTasksを変更
+ * @function
+ * @param {string} selected 絞り込み状態
+ */
+export const updateFilterData = (selected) => {
+  switch (selected) {
+    case 'all':
+      state.filterTasks = state.todoTasks;
+      break;
+    case 'complete':
+      state.filterTasks = state.todoTasks.filter((todoTask) => todoTask.completed);
+      break;
+    case 'incomplete':
+      state.filterTasks = state.todoTasks.filter((todoTask) => !todoTask.completed);
+      break;
+  }
 };

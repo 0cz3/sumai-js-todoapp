@@ -72,6 +72,7 @@ const controlDueDate = (newTodo) => {
   const todoInputs = newTodo.updateTodoDate();
   todoData.updateDateData(...todoInputs);
   localStorage.setStorageTodoTasks(todoData.state.todoTasks);
+  controlSelect();
 };
 
 /**
@@ -83,7 +84,6 @@ const controlDelete = (newTodo) => {
   const id = newTodo.deleteTodo();
   todoData.deleteTodoData(id);
   localStorage.setStorageTodoTasks(todoData.state.todoTasks);
-
   controlCount();
 };
 

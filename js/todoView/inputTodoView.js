@@ -50,7 +50,7 @@ class InputTodoView extends TodoView {
    * 入力欄をクリア
    */
   #clearInput() {
-    this._inputName.value = '';
+    [this._inputName, this.#inputDate].forEach((input) => input.value = '');
   }
 
   /**

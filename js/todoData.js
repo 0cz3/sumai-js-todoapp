@@ -5,6 +5,7 @@
 export const state = {
   todoTasks: [],
   todoTask: {},
+  sortTasks: {},
   filterTasks: {},
 };
 
@@ -76,20 +77,57 @@ export const deleteTodoData = (id) => {
 };
 
 /**
- * 絞り込み状態に応じてfilterTasksを変更
+ * 並び替えの選択に応じてsortTasksの順番を変更
+ * 配列内の順番が最後のTODOタスクがDOMの先頭に追加される
+ * @function
+ * @param {string} selected 絞り込み状態
+ */
+export const updateSortData = (selected) => {
+  switch (selected) {
+    case 'addedDate':
+      state.sortTasks = state.todoTasks;
+      break;
+    case 'addedDate_reverse':
+      state.sortTasks = state.todoTasks.toReversed();
+      break;
+    case 'dueDate': //期限が近いものを配列の最後にソート
+      state.sortTasks = state.todoTasks.toSorted((a, b) => {
+        //dateが等しい場合abの順でソート
+        if (a.date === b.date) return -1;
+        //dateが空欄の場合前にソート
+        if (!a.date) return -1;
+        if (!b.date) return 1;
+        //降順にソート
+        new Date(b.date) - new Date(a.date);
+      });
+      break;
+    case 'dueDate_reverse': //期限が遠いものを配列の先頭にソート
+      state.sortTasks = state.todoTasks.toSorted((a, b) => {
+        //dateが空欄の場合後にソート
+        if (!a.date) return 1;
+        if (!b.date) return -1;
+        // 昇順にソート
+        new Date(a.date) - new Date(b.date);
+      });
+      break;
+  }
+};
+
+/**
+ * 絞り込みの選択に応じてfilterTasksを変更
  * @function
  * @param {string} selected 絞り込み状態
  */
 export const updateFilterData = (selected) => {
   switch (selected) {
     case 'all':
-      state.filterTasks = state.todoTasks;
+      state.filterTasks = state.sortTasks;
       break;
     case 'complete':
-      state.filterTasks = state.todoTasks.filter((todoTask) => todoTask.completed);
+      state.filterTasks = state.sortTasks.filter((todoTask) => todoTask.completed);
       break;
     case 'incomplete':
-      state.filterTasks = state.todoTasks.filter((todoTask) => !todoTask.completed);
+      state.filterTasks = state.sortTasks.filter((todoTask) => !todoTask.completed);
       break;
   }
 };

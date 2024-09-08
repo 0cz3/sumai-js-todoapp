@@ -1,10 +1,10 @@
 import TodoView from './todoView.js';
-class FilterTodoView extends TodoView {
+class SortTodoView extends TodoView {
   /**
    * 絞り込みボタン
    * @type {HTMLSelectElement | null}
    */
-  _selectButton = document.querySelector('.js_todoTask_filter');
+  _selectButton = document.querySelector('.js_todoTask_sort');
 
   /**
    * @returns {string} 絞り込みボタンのステータス
@@ -21,4 +21,4 @@ class FilterTodoView extends TodoView {
     this._selectButton.addEventListener('change', handler.bind(this));
   }
 }
-export default new FilterTodoView();
+export default new SortTodoView();

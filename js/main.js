@@ -6,6 +6,7 @@ import RenderTodoView from './todoView/renderTodoView.js';
 import countTodoView from './todoView/countTodoView.js';
 import * as dropdown from './modules/dropdown.js';
 import FilterTodoView from './todoView/filterTodoView.js';
+import SortTodoView from './todoView/sortTodoView.js';
 
 /**
  * TODOタスク送信許可判定
@@ -24,7 +25,7 @@ const controlSubmitTodo = () => {
   controlInputTodo();
   todoData.addTodoData(...todoInputs);
   localStorage.setStorageTodoTasks(todoData.state.todoTasks);
-  controlFilter();
+  controlSelect();
 };
 
 /**
@@ -44,7 +45,7 @@ const controlCompleted = (newTodo) => {
   const id = newTodo.toggleCompletedTodo();
   todoData.toggleCompletedData(id);
   localStorage.setStorageTodoTasks(todoData.state.todoTasks);
-  controlFilter();
+  controlSelect();
 };
 
 /**
@@ -118,10 +119,23 @@ const controlDropdown = (e) => {
  * 絞り込み処理
  * @function
  */
-const controlFilter = () => {
+const controlSelect = () => {
+  todoData.updateSortData(SortTodoView.selected());
   todoData.updateFilterData(FilterTodoView.selected());
   RenderTodoView.clearTodoView();
   todoData.state.filterTasks.forEach((todoTask) => {
+    createTodoView(todoTask);
+  });
+};
+
+/**
+ * 絞り込み処理
+ * @function
+ */
+const controlSort = () => {
+  todoData.updateSortData(SortTodoView.selected());
+  RenderTodoView.clearTodoView();
+  todoData.state.sortTasks.forEach((todoTask) => {
     createTodoView(todoTask);
   });
 };
@@ -132,6 +146,7 @@ const controlFilter = () => {
  */
 const init = () => {
   todoData.importData(localStorage.getStorageTodoTasks());
+  todoData.state.sortTasks = todoData.state.todoTasks;
   todoData.state.todoTasks.forEach((todoTask) => {
     createTodoView(todoTask);
   });
@@ -139,7 +154,8 @@ const init = () => {
   InputTodoView.addEventListenerInput(controlInputTodo);
   InputTodoView.addEventListenerSubmit(controlSubmitTodo);
   dropdown.addEventListenerToggle(controlDropdown);
-  FilterTodoView.filterChange(controlFilter);
+  FilterTodoView.selectChange(controlSelect);
+  SortTodoView.selectChange(controlSort);
 };
 
 init();

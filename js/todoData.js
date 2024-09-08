@@ -98,7 +98,7 @@ export const updateSortData = (selected) => {
         if (!a.date) return -1;
         if (!b.date) return 1;
         //降順にソート
-        new Date(b.date) - new Date(a.date);
+        return new Date(b.date) - new Date(a.date);
       });
       break;
     case 'dueDate_reverse': //期限が遠いものを配列の先頭にソート
@@ -107,7 +107,7 @@ export const updateSortData = (selected) => {
         if (!a.date) return 1;
         if (!b.date) return -1;
         // 昇順にソート
-        new Date(a.date) - new Date(b.date);
+        return new Date(a.date) - new Date(b.date);
       });
       break;
   }

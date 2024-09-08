@@ -129,18 +129,6 @@ const controlSelect = () => {
 };
 
 /**
- * 絞り込み処理
- * @function
- */
-const controlSort = () => {
-  todoData.updateSortData(SortTodoView.selected());
-  RenderTodoView.clearTodoView();
-  todoData.state.sortTasks.forEach((todoTask) => {
-    createTodoView(todoTask);
-  });
-};
-
-/**
  * window読み込み時の処理
  * @function
  */
@@ -154,8 +142,7 @@ const init = () => {
   InputTodoView.addEventListenerInput(controlInputTodo);
   InputTodoView.addEventListenerSubmit(controlSubmitTodo);
   dropdown.addEventListenerToggle(controlDropdown);
-  FilterTodoView.selectChange(controlSelect);
-  SortTodoView.selectChange(controlSort);
+  [FilterTodoView, SortTodoView].forEach((select) => select.selectChange(controlSelect));
 };
 
 init();

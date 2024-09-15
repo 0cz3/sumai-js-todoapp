@@ -133,6 +133,7 @@ const controlSelect = () => {
  * @function
  */
 const init = () => {
+  controlInputTodo();
   todoData.importData(localStorage.getStorageTodoTasks());
   todoData.state.sortTasks = todoData.state.todoTasks;
   todoData.state.todoTasks.forEach((todoTask) => {

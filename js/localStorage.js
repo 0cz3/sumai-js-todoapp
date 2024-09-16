@@ -21,3 +21,12 @@ export const getStorageTodoTasks = () => {
   const items = localStorage.getItem(STORAGE_TODO_TASKS);
   return JSON.parse(items) || [];
 };
+
+/**
+ * ストレージが変更されたらhandlerを実行
+ * @function
+ * @param {Event} handler
+ */
+export const addEventListenerStorage = (handler) => {
+  window.addEventListener('storage', handler);
+};

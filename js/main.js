@@ -129,21 +129,31 @@ const controlSelect = () => {
 };
 
 /**
- * window読み込み時の処理
+ * ローカルストレージの内容をViewに反映
  * @function
  */
-const init = () => {
-  controlInputTodo();
+const controlImport = () => {
+  RenderTodoView.clearTodoView();
   todoData.importData(localStorage.getStorageTodoTasks());
   todoData.state.sortTasks = todoData.state.todoTasks;
   todoData.state.todoTasks.forEach((todoTask) => {
     createTodoView(todoTask);
   });
   controlCount();
+};
+
+/**
+ * window読み込み時の処理
+ * @function
+ */
+const init = () => {
+  controlInputTodo();
+  controlImport();
   InputTodoView.addEventListenerInput(controlInputTodo);
   InputTodoView.addEventListenerSubmit(controlSubmitTodo);
   dropdown.addEventListenerToggle(controlDropdown);
   [FilterTodoView, SortTodoView].forEach((select) => select.selectChange(controlSelect));
+  localStorage.addEventListenerStorage(controlImport);
 };
 
 init();

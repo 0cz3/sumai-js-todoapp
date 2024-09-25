@@ -1,49 +1,159 @@
-import { Todo } from './modules/todo.js';
-import toggleSubmitActive from './modules/toggleSubmitActive.js';
-import dropdown from './modules/dropdown.js';
-const submitButton = document.querySelector('.js_addTodo_submit');
-const todoTaskList = document.querySelector('.js_todoTask_list');
-const inputForm = document.querySelector('.js_addTodo_form');
-const inputField = document.querySelector('.js_addTodo_input');
-const toggleButton = document.querySelector('.js_todoTask_toggle');
+import * as localStorage from './localStorage.js';
+import * as todoData from './todoData.js';
+import TodoViewItem from './todoView/todoViewItem.js';
+import InputTodoView from './todoView/inputTodoView.js';
+import RenderTodoView from './todoView/renderTodoView.js';
+import countTodoView from './todoView/countTodoView.js';
+import * as dropdown from './modules/dropdown.js';
+import FilterTodoView from './todoView/filterTodoView.js';
+import SortTodoView from './todoView/sortTodoView.js';
 
 /**
- * Todoインスタンス生成、入力欄の初期化
+ * TODOタスク送信許可判定
+ * @function
  */
-const newTodoTasks = () => {
-  const newTodo = new Todo({
-    todoTaskList: todoTaskList,
-    inputValue: inputField.value,
-    counter: '.js_todoTask_count',
-  });
-  newTodo.addTodo();
-  inputField.value = '';
-  toggleSubmitActive(inputField.value, submitButton);
+const controlInputTodo = () => {
+  InputTodoView.hasText() ? InputTodoView.allowSubmit() : InputTodoView.denySubmit();
 };
 
 /**
- * 入力欄の変更・送信時のイベントリスナーを追加
+ * TODOタスク送信処理
+ * @function
  */
-const submitAddEventListener = () => {
-  inputField.addEventListener('input', () => {
-    toggleSubmitActive(inputField.value, submitButton);
-  });
-  submitButton.addEventListener('click', () => {
-    newTodoTasks();
-  });
-  inputForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    if (/^\S/.test(inputField.value)) {
-      newTodoTasks();
-    }
+const controlSubmitTodo = () => {
+  const todoInputs = InputTodoView.getInput();
+  controlInputTodo();
+  todoData.addTodoData(...todoInputs);
+  localStorage.setStorageTodoTasks(todoData.state.todoTasks);
+  controlSelect();
+};
+
+/**
+ * TODOタスク数反映
+ * @function
+ */
+const controlCount = () => {
+  countTodoView.updateCount(todoData.state.todoTasks.length);
+};
+
+/**
+ * TODOタスクの完了状態変更
+ * @function
+ * @param {TodoViewItem} newTodo
+ */
+const controlCompleted = (newTodo) => {
+  const id = newTodo.toggleCompletedTodo();
+  todoData.toggleCompletedData(id);
+  localStorage.setStorageTodoTasks(todoData.state.todoTasks);
+  controlSelect();
+};
+
+/**
+ * TODOタスク名変更
+ * @function
+ * @param {TodoViewItem} newTodo
+ */
+const controlTaskName = (newTodo) => {
+  if (newTodo.hasText()) {
+    const todoInputs = newTodo.updateTodoName();
+    todoData.updateNameData(...todoInputs);
+    localStorage.setStorageTodoTasks(todoData.state.todoTasks);
+  } else {
+    newTodo.denyUpdate();
+  }
+};
+
+/**
+ * TODOタスクの締切日変更
+ * @function
+ * @param {TodoViewItem} newTodo
+ */
+const controlDueDate = (newTodo) => {
+  const todoInputs = newTodo.updateTodoDate();
+  todoData.updateDateData(...todoInputs);
+  localStorage.setStorageTodoTasks(todoData.state.todoTasks);
+  controlSelect();
+};
+
+/**
+ * TODOタスク削除
+ * @function
+ * @param {TodoViewItem} newTodo
+ */
+const controlDelete = (newTodo) => {
+  const id = newTodo.deleteTodo();
+  todoData.deleteTodoData(id);
+  localStorage.setStorageTodoTasks(todoData.state.todoTasks);
+  controlCount();
+};
+
+/**
+ * TODOタスクのデータからインスタンス生成
+ * @param {todoTask} todoTask
+ */
+const createTodoView = (todoTask) => {
+  /**
+   * TodoViewItemのインスタンス
+   * @type {TodoViewItem}
+   */
+  const newTodo = new TodoViewItem(todoTask);
+  RenderTodoView.createTodoView(newTodo.markup());
+  controlCount();
+  newTodo.selectElements();
+  newTodo.addEventListenerCheck(controlCompleted);
+  newTodo.addEventListenerLabel(controlTaskName);
+  newTodo.addEventListenerDate(controlDueDate);
+  newTodo.addEventListenerDelete(controlDelete);
+};
+
+/**
+ * ドロップダウンでの表示非表示切り替え
+ * @function
+ * @param {Event} e
+ */
+const controlDropdown = (e) => {
+  dropdown.dropdown(e);
+};
+
+/**
+ * 絞り込み処理
+ * @function
+ */
+const controlSelect = () => {
+  todoData.updateSortData(SortTodoView.selected());
+  todoData.updateFilterData(FilterTodoView.selected());
+  RenderTodoView.clearTodoView();
+  todoData.state.filterTasks.forEach((todoTask) => {
+    createTodoView(todoTask);
   });
 };
+
 /**
- * window読み込み時の処理を実行
+ * ローカルストレージの内容をViewに反映
+ * @function
+ */
+const controlImport = () => {
+  RenderTodoView.clearTodoView();
+  todoData.importData(localStorage.getStorageTodoTasks());
+  todoData.state.sortTasks = todoData.state.todoTasks;
+  todoData.state.todoTasks.forEach((todoTask) => {
+    createTodoView(todoTask);
+  });
+  controlCount();
+};
+
+/**
+ * window読み込み時の処理
+ * @function
  */
 const init = () => {
-  dropdown(toggleButton, todoTaskList);
-  submitAddEventListener();
+  controlInputTodo();
+  controlImport();
+  InputTodoView.addEventListenerInput(controlInputTodo);
+  InputTodoView.addEventListenerSubmit(controlSubmitTodo);
+  dropdown.addEventListenerToggle(controlDropdown);
+  [FilterTodoView, SortTodoView].forEach((select) => select.selectChange(controlSelect));
+  localStorage.addEventListenerStorage(controlImport);
 };
 
 init();
